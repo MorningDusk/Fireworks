@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1909850108878755817}
   m_Layer: 7
   m_Name: Capsule_1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1909850108878755814}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: 10, z: -20.02}
+  m_LocalPosition: {x: 5, y: 10, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -97,9 +97,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 2
+  m_Height: 1.8326797
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.083660126, z: 0}
 --- !u!54 &1909850108878755816
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -129,13 +129,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Type: 1
-  move_Shooter: 0
-  move_Catcher: 0
-  MoveSpeed: 0
+  Health: 0
+  MaxHealth: 0
+  Piece: 0
+  PiecePerBullet: 0
+  Speed: 0
   JumpPower: 0
-  isJumping: 0
-  isMovable_S: 1
-  isMovable_C: 1
 --- !u!1 &1909850109086440630
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +151,7 @@ GameObject:
   - component: {fileID: 1909850109086440633}
   m_Layer: 7
   m_Name: Capsule_0
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -165,7 +164,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1909850109086440630}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5, y: 10, z: -20.02}
+  m_LocalPosition: {x: -5, y: 10, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -233,9 +232,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 2
+  m_Height: 1.86969
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.06515503, z: 0}
 --- !u!54 &1909850109086440632
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -265,13 +264,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Type: 0
-  move_Shooter: 0
-  move_Catcher: 0
-  MoveSpeed: 0
+  Health: 0
+  MaxHealth: 0
+  Piece: 0
+  PiecePerBullet: 0
+  Speed: 0
   JumpPower: 0
-  isJumping: 0
-  isMovable_S: 1
-  isMovable_C: 1
 --- !u!1 &1909850109651455123
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,7 +293,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1909850109651455123}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
