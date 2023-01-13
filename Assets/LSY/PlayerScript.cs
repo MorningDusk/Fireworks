@@ -5,24 +5,42 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
+    Rigidbody rigid;
     private enum Player_Type
     {
         SHOOTER,
         CATCHER,
         END
     }
-
     [SerializeField]
     Player_Type _Type;
+
     [SerializeField]
-    float move_Shooter, move_Catcher, MoveSpeed, JumpPower;
+    int Health, MaxHealth, Piece, PiecePerBullet;
+
     [SerializeField]
+    float Speed, JumpPower;
+    float move_Shooter, move_Catcher; 
+
+
+
     bool isJumping = false, isMovable_S = true, isMovable_C = true;
+
+
+
 
     void Start()
     {
-        MoveSpeed = 0.1f;
-        JumpPower = 500.0f;
+        rigid = gameObject.GetComponent<Rigidbody>();
+
+        MaxHealth = 10;
+        Health = MaxHealth;
+
+        Piece = 0;
+        PiecePerBullet = 5;
+
+        Speed = 0.1f;
+        JumpPower = 20.0f;
     }
 
     private void Update()
@@ -80,32 +98,44 @@ public class PlayerScript : MonoBehaviour
     void move()
     {
         if (isMovable_S && _Type == Player_Type.SHOOTER)
-            transform.Translate(new Vector3(move_Shooter, 0f, 0f) * MoveSpeed);
+        {
+            if (isJumping)
+                transform.Translate(new Vector3(move_Shooter, 0f, 0f) * Speed * 0.7f);
+            else
+                transform.Translate(new Vector3(move_Shooter, 0f, 0f) * Speed);
+
+        }
         else if (isMovable_C && _Type == Player_Type.CATCHER)
-            transform.Translate(new Vector3(move_Catcher, 0f, 0f) * MoveSpeed);
+        {
+            if (isJumping)
+                transform.Translate(new Vector3(move_Catcher, 0f, 0f) * Speed * 0.7f);
+            else
+                transform.Translate(new Vector3(move_Catcher, 0f, 0f) * Speed);
+
+        }
     }
     void jump()
     {
         switch (_Type)
         {
             case Player_Type.SHOOTER:
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.W))
                 {
                     if (!isJumping)
                     {
                         isJumping = true;
-                        this.GetComponent<Rigidbody>().AddForce(Vector3.up * JumpPower, ForceMode.Force);
+                        this.GetComponent<Rigidbody>().AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
                     }
                 }
                 break;
 
             case Player_Type.CATCHER:
-                if (Input.GetKeyDown(KeyCode.RightShift))
+                if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
                     if (!isJumping)
                     {
                         isJumping = true;
-                        this.GetComponent<Rigidbody>().AddForce(Vector3.up * JumpPower, ForceMode.Force);
+                        this.GetComponent<Rigidbody>().AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
                     }
                 }
                 break;
