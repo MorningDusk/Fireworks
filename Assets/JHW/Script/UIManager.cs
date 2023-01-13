@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class UIManager : MonoBehaviour
+public class UIManager : SingletonMonoBehaviour<UIManager>
 {
     public int totalSecond = 0;
     private bool isTimerAble = true;
 
     private TextMeshProUGUI timeMinText;
     private TextMeshProUGUI timeSecText;
+
+    public int Get_Time() { return totalSecond; }
 
     private void Start() {
         timeMinText = GameObject.Find("TimeMin").GetComponent<TextMeshProUGUI>();
