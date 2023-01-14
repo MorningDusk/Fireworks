@@ -12,8 +12,18 @@ public class PlayerScript : MonoBehaviour
         CATCHER,
         END
     }
+    public enum STATE
+    {
+        IDLE,
+        MOVE,
+        ACTION,
+        STATE_END
+    }
+
     [SerializeField]
     Player_Type _Type;
+    [SerializeField]
+    STATE _State;
 
     [SerializeField]
     int Health, MaxHealth, Bullet, MaxBullet, Piece, PiecePerBullet;
@@ -38,6 +48,7 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
+        _State = STATE.IDLE;
         rigid = gameObject.GetComponent<Rigidbody>();
 
         MaxHealth = 10;
@@ -109,19 +120,36 @@ public class PlayerScript : MonoBehaviour
     {
         if (isMovable_S && _Type == Player_Type.SHOOTER)
         {
+            Vector3 moveVec = new Vector3(move_Shooter, 0f, 0f);
             if (isJumping)
-                transform.Translate(new Vector3(move_Shooter, 0f, 0f) * Speed * 0.7f);
+            {
+                //transform.Translate(moveVec * Speed * 0.7f);
+                transform.position += moveVec * Speed * 0.7f;
+                transform.LookAt(transform.position + moveVec);
+            }
             else
-                transform.Translate(new Vector3(move_Shooter, 0f, 0f) * Speed);
+            {
+                //transform.Translate(moveVec * Speed);
+                transform.position += moveVec * Speed;
+                transform.LookAt(transform.position + moveVec);
+            }
 
         }
         else if (isMovable_C && _Type == Player_Type.CATCHER)
         {
+            Vector3 moveVec = new Vector3(move_Catcher, 0f, 0f);
             if (isJumping)
-                transform.Translate(new Vector3(move_Catcher, 0f, 0f) * Speed * 0.7f);
+            {
+                //transform.Translate(moveVec * Speed * 0.7f);
+                transform.position += moveVec * Speed * 0.7f;
+                transform.LookAt(transform.position + moveVec);
+            }
             else
-                transform.Translate(new Vector3(move_Catcher, 0f, 0f) * Speed);
-
+            {
+                //transform.Translate(moveVec * Speed);
+                transform.position += moveVec * Speed;
+                transform.LookAt(transform.position + moveVec);
+            }
         }
     }
     void jump()
