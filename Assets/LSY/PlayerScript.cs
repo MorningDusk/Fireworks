@@ -41,6 +41,8 @@ public class PlayerScript : MonoBehaviour
     public int GetMaxHealth() { return MaxHealth; }
     public int GetPiece() { return Piece; }
     public int GetPiecePerBullet() { return PiecePerBullet; }
+    public int GetBullet() { return Bullet; }
+    public int GetMaxBullet() { return MaxBullet; }
     public Player_Type GetPlayerType() { return _Type; }
 
     // Setter
@@ -62,6 +64,10 @@ public class PlayerScript : MonoBehaviour
 
         Speed = 0.1f;
         JumpPower = 20.0f;
+
+        // UI 변경
+        UIManager.Instance.UI_changeFragment();
+        UIManager.Instance.UI_changeBullet();
     }
 
     private void Update()
@@ -190,6 +196,7 @@ public class PlayerScript : MonoBehaviour
             if (Bullet != MaxBullet) // 탄약수가 최대가 아니라면
             {
                 Bullet++; // 총알 개수 증가
+                UIManager.Instance.UI_changeBullet(); // 총알 개수 증가하는 ux
             }; 
         }
         UIManager.Instance.UI_changeFragment(); // UI 변경
