@@ -70,6 +70,13 @@ public class Meteor : MonoBehaviour
         switch (other.tag)
         {
             case "Player":
+
+                // 플레이어 HP 감소
+                other.GetComponent<PlayerScript>().DecreaseHealth(1);
+
+                // 플레이어 HP 감소에 따른 UI 변경
+                UIManager.Instance.UI_changeHP(other.GetComponent<PlayerScript>().GetPlayerType());
+                
                 break;
 
             case "Floor":
