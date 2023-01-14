@@ -49,9 +49,16 @@ public class Fragment : MonoBehaviour
         {
             // 플레이어와 조각 벗어나면 주울수없게
             case "Player":
-                isCollectAble = false;
+                StartCoroutine(changeCollectAble());
                 break;
         }
+    }
+
+    // 플레이어가 유성조각 벗어나면(근처에 없으면) 조각 주울 수 없게 변경
+    IEnumerator changeCollectAble()
+    {
+        yield return new WaitForSeconds(0.1f);
+        isCollectAble = false;
     }
 
     // Collecter(Catcher)가 R Shift 누르면 유성조각 획득

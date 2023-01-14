@@ -81,6 +81,19 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         }
     }
 
+    // 왼쪽 상단 불꽃놀이 총탄수 UI 변경하는 함수
+    public void UI_changeBullet()
+    {
+        PlayerScript player = GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>();
+
+        string displayText = ""; // 보여질 텍스트
+        displayText = player.GetBullet().ToString() + "/" + player.GetMaxBullet().ToString();
+        GameObject.Find("BulletText").GetComponent<TextMeshProUGUI>().text = displayText;
+
+        // UX
+        DOTween.Sequence().Append(GameObject.Find("BulletText").transform.DOScale(1.1f, 0.2f)).Append(GameObject.Find("BulletText").transform.DOScale(1.0f, 0.2f));
+
+    }
 
     // 오른쪽 상단 유성 조각 획득시 UI 변경하는 함수
     public void UI_changeFragment()
