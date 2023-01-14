@@ -34,7 +34,7 @@ public class FragmentManager : MonoBehaviour
             frag.SetActive(true);
 
             // 조각 랜덤스폰
-            frag.transform.position = new Vector3(Random.Range(-30, 30), 30f, 0f);
+            frag.transform.position = new Vector3(Random.Range(-30, 30), 30f, transform.position.z);
 
             // 조각 스폰 후 4초 뒤 소멸
             StartCoroutine(collectTimeout(frag));
