@@ -222,7 +222,10 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     {
         selfObj.transform.DOScale(1.2f, 0.3f);
         selfObj.transform.GetComponent<Image>().DOColor(new Color(1f,0.9f,0.6f),0.3f);
+<<<<<<< HEAD
         SoundManager.Instance.playSFX("มกวม");
+=======
+>>>>>>> main
     }
     public void StartBtn_MouseOut(GameObject selfObj)
     {
