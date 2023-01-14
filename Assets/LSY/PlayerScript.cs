@@ -12,8 +12,18 @@ public class PlayerScript : MonoBehaviour
         CATCHER,
         END
     }
+    public enum STATE
+    {
+        IDLE,
+        MOVE,
+        ACTION,
+        STATE_END
+    }
+
     [SerializeField]
     Player_Type _Type;
+    [SerializeField]
+    STATE _State;
 
     [SerializeField]
     int Health, MaxHealth, Bullet, MaxBullet, Piece, PiecePerBullet;
@@ -38,6 +48,7 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
+        _State = STATE.IDLE;
         rigid = gameObject.GetComponent<Rigidbody>();
 
         MaxHealth = 10;
