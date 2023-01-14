@@ -602,6 +602,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 2990021103108766720, guid: 01decb4df651a1e44b2f464ae8028830,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 2990021103108766721, guid: 01decb4df651a1e44b2f464ae8028830,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5272551704675020089, guid: 01decb4df651a1e44b2f464ae8028830,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589114871927598249, guid: 01decb4df651a1e44b2f464ae8028830,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 7315858331654550197, guid: 01decb4df651a1e44b2f464ae8028830,
         type: 3}
       propertyPath: m_AnchorMax.x
