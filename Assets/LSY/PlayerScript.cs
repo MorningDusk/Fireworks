@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
     Rigidbody rigid;
-    private enum Player_Type
+    public enum Player_Type
     {
         SHOOTER,
         CATCHER,
@@ -26,8 +26,15 @@ public class PlayerScript : MonoBehaviour
 
     bool isJumping = false, isMovable_S = true, isMovable_C = true;
 
+    // Getter
+    public int GetHealth() { return Health; }
+    public int GetMaxHealth() { return MaxHealth; }
+    public int GetPiece() { return Piece; }
+    public int GetPiecePerBullet() { return PiecePerBullet; }
+    public Player_Type GetPlayerType() { return _Type; }
 
-
+    // Setter
+    public void DecreaseHealth(int Value) { Health -= Value; }
 
     void Start()
     {
