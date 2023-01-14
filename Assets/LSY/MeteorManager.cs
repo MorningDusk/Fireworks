@@ -25,14 +25,16 @@ public class MeteorManager : SingletonMonoBehaviour<MeteorManager>
         Meteor_Pool_Init();
 
     }
-
+    [SerializeField]
+    bool stopVar = false;
 
     void Update()
     {
         Time = UIManager.Instance.Get_Time();
 
         if (Time != bTime)
-            Get_Meteor();
+            if (!stopVar)
+                Get_Meteor();
 
     //
     }
@@ -47,6 +49,8 @@ public class MeteorManager : SingletonMonoBehaviour<MeteorManager>
             obj.SetActive(false);
             obj.transform.SetParent(Big_parent);
             obj.transform.localPosition = Big_parent.localPosition;
+            string obj_name = obj.name;
+            obj.name = obj_name + "_#" + n;
             var meteor = obj.GetComponent<Meteor>();
             //meteor.MeteorType = Meteor.Meteor_Type.BIG;
             return meteor;
@@ -57,6 +61,8 @@ public class MeteorManager : SingletonMonoBehaviour<MeteorManager>
             obj.SetActive(false);
             obj.transform.SetParent(Medium_parent);
             obj.transform.localPosition = Medium_parent.localPosition;
+            string obj_name = obj.name;
+            obj.name = obj_name + "_#" + n;
             var meteor = obj.GetComponent<Meteor>();
             //meteor.MeteorType = Meteor.Meteor_Type.MEDIUM;
             return meteor;
@@ -67,6 +73,8 @@ public class MeteorManager : SingletonMonoBehaviour<MeteorManager>
             obj.SetActive(false);
             obj.transform.SetParent(Small_parent);
             obj.transform.localPosition = Small_parent.localPosition;
+            string obj_name = obj.name;
+            obj.name = obj_name + "_#" + n;
             var meteor = obj.GetComponent<Meteor>();
             //meteor.MeteorType = Meteor.Meteor_Type.SMALL;
             return meteor;
@@ -76,61 +84,140 @@ public class MeteorManager : SingletonMonoBehaviour<MeteorManager>
     void Get_Meteor()
     {
         System.Random r = new System.Random();
-        int n = r.Next(10);
 
-        if (Time % 4 == 0 && Time < 180)
+        if (Time < 180)
         {
-            if (n < 8)
+            int n = r.Next(10);
+            if (Time % 2 == 0)
             {
-                Transform obj = Small_parent.GetChild(1);
-                obj.gameObject.SetActive(true);
-                obj.SetParent(Active_parent);
-                obj.GetComponent<Meteor>().Meteor_Init();
-
-                Debug.Log(obj + " Active " + Time);
-            }
-            else
-            {
-                Transform obj = Medium_parent.GetChild(1);
-                obj.gameObject.SetActive(true);
-                obj.SetParent(Active_parent);
-                obj.GetComponent<Meteor>().Meteor_Init(); 
-
-                Debug.Log(obj + " Active " + Time);
+                if (n < 7)
+                    Meteor_pop(m_Small);
+                else
+                    Meteor_pop(m_Medium);
             }
             bTime = Time;
         }
-        else if (Time % 3 == 0 && Time < 560)
+        else if (Time < 480)
         {
-            if (n < 5)
+            int n = r.Next(10);
+            if (Time % 2 == 0)
             {
-                ;
+                if (n < 7)
+                    Meteor_pop(m_Small);
+                else
+                    Meteor_pop(m_Medium);
             }
-            else if (n < 9)
-            {
 
-            }
-            else
+            int n2 = r.Next(10);
+            if (Time % 3 == 0)
             {
-
+                if (n2 < 5)
+                    Meteor_pop(m_Small);
+                else if (n2 < 8)
+                    Meteor_pop(m_Medium);
+                else
+                    Meteor_pop(m_Big);
             }
-                ;
+            bTime = Time;
         }
-        else if (Time % 3 == 0)
+        else
         {
+            int n = r.Next(10);
             if (n < 5)
-            {
-                ;
-            }
-            else if (n < 9)
-            {
-
-            }
+                Meteor_pop(m_Small);
+            else if (n < 8)
+                Meteor_pop(m_Medium);
             else
+                Meteor_pop(m_Big);
+
+            int n2 = r.Next(10);
+            if (Time % 2 == 0)
             {
-
+                if (n2 < 5)
+                    Meteor_pop(m_Small);
+                else if (n2 < 8)
+                    Meteor_pop(m_Medium);
+                else
+                    Meteor_pop(m_Big);
             }
+            bTime = Time;
 
+        }
+    }
+
+    public void Meteor_pop(GameObjectPool<Meteor> m_meteor)
+    {
+        Transform obj = m_meteor.pop().transform;
+        obj.gameObject.SetActive(true);
+        obj.SetParent(Active_parent);
+        // 0~30 50% ±×¿Ü 50%   -30~60
+        if (Random.Range(0, 10) / 3 == 0)
+            obj.transform.position = new Vector3(Random.Range(0, 30), 60f, transform.position.z);
+        else
+            obj.transform.position = new Vector3(Random.Range(-30, 60), 60f, transform.position.z);
+
+        //Debug.Log(obj + " " + obj.transform.position);
+        obj.GetComponent<Meteor>().Meteor_Init();
+    }
+
+    public void Meteor_pop(Meteor.Meteor_Type _type, Vector3 pos)
+    {
+        // Overloading, use after split
+
+        //Debug.Log(_type + " , " + pos);
+
+        switch (_type)
+        {
+            case Meteor.Meteor_Type.BIG:
+                for (int i = 0; i < 2; i++)
+                {
+                    Transform obj = m_Medium.pop().transform;
+                    obj.gameObject.SetActive(true);
+                    obj.SetParent(Active_parent);
+                    obj.transform.position = pos;
+                    obj.GetComponent<Meteor>().MetSpeed *= 0.75f;
+                    obj.GetComponent<Meteor>().Meteor_Init(1);
+                }
+                break;
+            case Meteor.Meteor_Type.MEDIUM:
+                for (int i = 0; i < 2; i++)
+                {
+                    Transform obj = m_Small.pop().transform;
+                    obj.gameObject.SetActive(true);
+                    obj.SetParent(Active_parent);
+                    obj.transform.position = pos;
+                    obj.GetComponent<Meteor>().MetSpeed *= 0.75f;
+                    obj.GetComponent<Meteor>().Meteor_Init(1);
+                }
+
+                break;
+            case Meteor.Meteor_Type.SMALL:
+                ;
+                break;
+        }
+        
+    }
+
+    public void Meteor_pushback(Meteor meteor)
+    {
+        meteor.gameObject.SetActive(false);
+        meteor.transform.localPosition = Vector3.zero;
+        meteor._enabled = false;
+        meteor._split = false;
+        switch(meteor.MeteorType)
+        {
+            case Meteor.Meteor_Type.BIG:
+                meteor.transform.SetParent(Big_parent);
+                m_Big.push(meteor);
+                break;
+            case Meteor.Meteor_Type.MEDIUM:
+                meteor.transform.SetParent(Medium_parent);
+                m_Medium.push(meteor);
+                break;
+            case Meteor.Meteor_Type.SMALL:
+                meteor.transform.SetParent(Small_parent);
+                m_Small.push(meteor);
+                break;
         }
     }
 
