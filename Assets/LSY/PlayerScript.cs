@@ -6,39 +6,60 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
     Rigidbody rigid;
+    public Animator Anim;
     public enum Player_Type
     {
         SHOOTER,
         CATCHER,
         END
     }
+    public enum STATE
+    {
+        IDLE,
+        MOVE,
+        ACTION,
+        STATE_END
+    }
+
     [SerializeField]
     Player_Type _Type;
+    [SerializeField]
+    STATE _State;
 
     [SerializeField]
     int Health, MaxHealth, Bullet, MaxBullet, Piece, PiecePerBullet;
 
     [SerializeField]
     float Speed, JumpPower;
-    float move_Shooter, move_Catcher; 
+    float move_Shooter, move_Catcher;
+    float jump_Y = 0f;
 
 
-
-    bool isJumping = false, isMovable_S = true, isMovable_C = true;
+    [SerializeField]
+    bool isJumping = false, isGround = false;
+    bool isMovable_S = true, isMovable_C = true;
 
     // Getter
     public int GetHealth() { return Health; }
     public int GetMaxHealth() { return MaxHealth; }
     public int GetPiece() { return Piece; }
     public int GetPiecePerBullet() { return PiecePerBullet; }
+    public int GetBullet() { return Bullet; }
+    public int GetMaxBullet() { return MaxBullet; }
     public Player_Type GetPlayerType() { return _Type; }
 
     // Setter
     public void DecreaseHealth(int Value) { Health -= Value; }
 
+    private void Awake()
+    {
+        _State = STATE.IDLE;
+        rigid = GetComponent<Rigidbody>();
+        Anim = GetComponent<Animator>();
+    }
+
     void Start()
     {
-        rigid = gameObject.GetComponent<Rigidbody>();
 
         MaxHealth = 10;
         Health = MaxHealth;
@@ -51,12 +72,17 @@ public class PlayerScript : MonoBehaviour
 
         Speed = 0.1f;
         JumpPower = 20.0f;
+
+        // UI 변경
+        UIManager.Instance.UI_changeFragment();
+        UIManager.Instance.UI_changeBullet();
     }
 
     private void Update()
     {
         jump();
         move();
+        attack();
     }
 
     void FixedUpdate()
@@ -78,9 +104,14 @@ public class PlayerScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.tag);
+        Debug.Log(this.gameObject + " " + collision.gameObject);
         if (collision.gameObject.CompareTag("Floor"))
+        {
             isJumping = false;
+            isGround = true;
+            jump_Y = this.transform.position.y;
+            Anim.SetBool("isJump", false);
+        }
 
         if (collision.gameObject.CompareTag("Wall"))
         {
@@ -95,6 +126,10 @@ public class PlayerScript : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            isGround = false;
+        }
         if (collision.gameObject.CompareTag("Wall"))
         {
             if (_Type == Player_Type.SHOOTER)
@@ -104,6 +139,7 @@ public class PlayerScript : MonoBehaviour
         }
 
     }
+
 
     void move()
     {
@@ -122,9 +158,10 @@ public class PlayerScript : MonoBehaviour
                 transform.position += moveVec * Speed;
                 transform.LookAt(transform.position + moveVec);
             }
-
+            Anim.SetBool("isWalk", moveVec != Vector3.zero);
         }
-        else if (isMovable_C && _Type == Player_Type.CATCHER)
+
+        if (isMovable_C && _Type == Player_Type.CATCHER)
         {
             Vector3 moveVec = new Vector3(move_Catcher, 0f, 0f);
             if (isJumping)
@@ -139,33 +176,72 @@ public class PlayerScript : MonoBehaviour
                 transform.position += moveVec * Speed;
                 transform.LookAt(transform.position + moveVec);
             }
+            Anim.SetBool("isWalk", moveVec != Vector3.zero);
         }
+
+        //
     }
     void jump()
     {
-        switch (_Type)
+        if (isJumping)
         {
-            case Player_Type.SHOOTER:
-                if (Input.GetKeyDown(KeyCode.W))
-                {
-                    if (!isJumping)
+            if (jump_Y <= this.transform.position.y)
+            {
+                jump_Y = this.transform.position.y;
+            }
+            else
+            {
+                //Debug.Log("Trigger Off");
+                this.GetComponent<MeshCollider>().isTrigger = false;
+            }
+        }
+        else if (isGround)
+        {
+            switch (_Type)
+            {
+                case Player_Type.SHOOTER:
+                    if (Input.GetKeyDown(KeyCode.W))
                     {
-                        isJumping = true;
-                        this.GetComponent<Rigidbody>().AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+                        if (!isJumping)
+                        {
+                            isJumping = true;
+                            this.GetComponent<MeshCollider>().isTrigger = true;
+                            this.GetComponent<Rigidbody>().AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+                            Anim.SetBool("isJump", true);
+                        }
                     }
-                }
-                break;
+                    break;
 
-            case Player_Type.CATCHER:
-                if (Input.GetKeyDown(KeyCode.UpArrow))
-                {
-                    if (!isJumping)
+                case Player_Type.CATCHER:
+                    if (Input.GetKeyDown(KeyCode.UpArrow))
                     {
-                        isJumping = true;
-                        this.GetComponent<Rigidbody>().AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+                        if (!isJumping)
+                        {
+                            isJumping = true;
+                            this.GetComponent<MeshCollider>().isTrigger = true;
+                            this.GetComponent<Rigidbody>().AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+                            Anim.SetBool("isJump", true);
+                        }
                     }
-                }
-                break;
+                    break;
+            }
+        }
+        //
+    }
+    void attack()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && _Type == Player_Type.SHOOTER)
+        {
+            if (Bullet > 0)
+            {
+                Debug.Log("Shot!");
+                Anim.SetTrigger("doAttack");
+                Bullet--;
+            }
+            else
+            {
+                Debug.Log("No Bullet");
+            }
         }
     }
 
@@ -179,6 +255,7 @@ public class PlayerScript : MonoBehaviour
             if (Bullet != MaxBullet) // 탄약수가 최대가 아니라면
             {
                 Bullet++; // 총알 개수 증가
+                UIManager.Instance.UI_changeBullet(); // 총알 개수 증가하는 ux
             }; 
         }
         UIManager.Instance.UI_changeFragment(); // UI 변경
