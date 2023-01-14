@@ -152,6 +152,7 @@ MonoBehaviour:
   Active_parent: {fileID: 0}
   Time: 0
   bTime: 0
+  stopVar: 0
 --- !u!1 &5695948155233149726
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,6 +266,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Type: 1
   MetSpeed: 30
+  _enabled: 0
+  _split: 0
 --- !u!54 &5754740736034092487
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -394,6 +397,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Type: 2
   MetSpeed: 30
+  _enabled: 0
+  _split: 0
 --- !u!54 &6157475433263865135
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -571,6 +576,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Type: 0
   MetSpeed: 30
+  _enabled: 0
+  _split: 0
 --- !u!1001 &5777605350903981623
 PrefabInstance:
   m_ObjectHideFlags: 0
