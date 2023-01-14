@@ -15,6 +15,10 @@ public class Meteor : MonoBehaviour
     [SerializeField]
     Meteor_Type _Type;
 
+    [SerializeField]
+    float MetSpeed = 30.0f;
+
+
     bool _enabled = false;
 
     // Property
@@ -30,7 +34,7 @@ public class Meteor : MonoBehaviour
     {
         if(_enabled)
         {
-            this.transform.Translate(new Vector3(-3.0f, -3.0f, 0f) * 10.0f * Time.deltaTime);
+            this.transform.Translate(new Vector3(-1.0f, -1.0f, 0f) * MetSpeed * Time.deltaTime);
         }
 
         if (this.transform.localPosition.y < -50.0f)
