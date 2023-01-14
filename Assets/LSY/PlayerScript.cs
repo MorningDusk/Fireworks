@@ -64,10 +64,25 @@ public class PlayerScript : MonoBehaviour
 
         Speed = 0.1f;
         JumpPower = 20.0f;
+    }
+    
+    // 플레이어 초기화
+    public void playerInit()
+    {
+        _State = STATE.IDLE;
+        rigid = gameObject.GetComponent<Rigidbody>();
 
-        // UI 변경
-        UIManager.Instance.UI_changeFragment();
-        UIManager.Instance.UI_changeBullet();
+        MaxHealth = 10;
+        Health = MaxHealth;
+
+        MaxBullet = 10;
+        Bullet = MaxBullet;
+
+        Piece = 0;
+        PiecePerBullet = 5;
+
+        Speed = 0.1f;
+        JumpPower = 20.0f;
     }
 
     private void Update()
