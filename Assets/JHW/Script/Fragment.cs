@@ -9,6 +9,8 @@ public class Fragment : MonoBehaviour
     float LifeTime; 
     float FadeTime = 4f;
 
+    bool isCollect = false;
+
     // 조각 수집 가능 여부
     private bool isCollectAble = false;
 
@@ -49,9 +51,16 @@ public class Fragment : MonoBehaviour
         {
             // 플레이어와 조각 벗어나면 주울수없게
             case "Player":
-                isCollectAble = false;
+                StartCoroutine(changeCollectAble());
                 break;
         }
+    }
+
+    // 플레이어가 유성조각 벗어나면(근처에 없으면) 조각 주울 수 없게 변경
+    IEnumerator changeCollectAble()
+    {
+        yield return new WaitForSeconds(0.1f);
+        isCollectAble = false;
     }
 
     // Collecter(Catcher)가 R Shift 누르면 유성조각 획득
@@ -63,8 +72,12 @@ public class Fragment : MonoBehaviour
             {
                 this.transform.SetAsLastSibling();
                 this.gameObject.SetActive(false);
+                this.isCollectAble = false;
                 GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>().catchFragment();
+                GameObject.Find("Players").transform.GetChild(1).GetComponent<PlayerScript>().Anim.SetTrigger("doCollect");
             }
         }
     }
+
+    //
 }
