@@ -28,7 +28,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         while (true)
         {
             Vector3 locationHP = Camera.main.WorldToScreenPoint(GameObject.Find("Players").transform.GetChild(0).position);
-            GameObject.Find("UI/Attacker").transform.position = new Vector3(locationHP.x,locationHP.y + 50f,locationHP.z);
+            GameObject.Find("UI/Attacker").transform.position = new Vector3(locationHP.x,locationHP.y + 100f,locationHP.z);
             yield return new WaitForSeconds(0.01f);
         }
     }
@@ -38,7 +38,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         while (true)
         {
             Vector3 locationHP = Camera.main.WorldToScreenPoint(GameObject.Find("Players").transform.GetChild(1).position);
-            GameObject.Find("UI/Collecter").transform.position = new Vector3(locationHP.x, locationHP.y + 50f, locationHP.z); 
+            GameObject.Find("UI/Collecter").transform.position = new Vector3(locationHP.x, locationHP.y + 100f, locationHP.z); 
             yield return new WaitForSeconds(0.01f);
         }
     }
