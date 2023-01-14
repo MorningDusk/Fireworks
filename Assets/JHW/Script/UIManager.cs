@@ -86,7 +86,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         while (!gm.getGameOver())
         {
             Vector3 locationHP = Camera.main.WorldToScreenPoint(GameObject.Find("Players").transform.GetChild(0).position);
+//<<<<<<< HEAD
             GameObject.Find("UI/InGame/Attacker").transform.position = new Vector3(locationHP.x, locationHP.y + 100f, locationHP.z);
+//=======
+//            GameObject.Find("UI/Attacker").transform.position = new Vector3(locationHP.x,locationHP.y + 120f,locationHP.z);
+//>>>>>>> Dev_LSY
             yield return new WaitForSeconds(0.01f);
         }
     }
@@ -96,7 +100,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         while (!gm.getGameOver())
         {
             Vector3 locationHP = Camera.main.WorldToScreenPoint(GameObject.Find("Players").transform.GetChild(1).position);
+//<<<<<<< HEAD
             GameObject.Find("UI/InGame/Collecter").transform.position = new Vector3(locationHP.x, locationHP.y + 100f, locationHP.z);
+//=======
+//            GameObject.Find("UI/Collecter").transform.position = new Vector3(locationHP.x, locationHP.y + 120f, locationHP.z); 
+//>>>>>>> Dev_LSY
             yield return new WaitForSeconds(0.01f);
         }
     }
@@ -222,10 +230,10 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     {
         selfObj.transform.DOScale(1.2f, 0.3f);
         selfObj.transform.GetComponent<Image>().DOColor(new Color(1f,0.9f,0.6f),0.3f);
-<<<<<<< HEAD
+//<<<<<<< HEAD
         SoundManager.Instance.playSFX("มกวม");
-=======
->>>>>>> main
+//=======
+//>>>>>>> main
     }
     public void StartBtn_MouseOut(GameObject selfObj)
     {

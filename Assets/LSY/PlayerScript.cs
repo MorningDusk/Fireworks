@@ -18,9 +18,12 @@ public class PlayerScript : MonoBehaviour
         IDLE,
         MOVE,
         ACTION,
+        DEAD,
         STATE_END
     }
 
+    [SerializeField]
+    BulletManager bulletManager;
     [SerializeField]
     Player_Type _Type;
     [SerializeField]
@@ -36,7 +39,7 @@ public class PlayerScript : MonoBehaviour
 
 
     [SerializeField]
-    bool isJumping = false, isGround = false;
+    bool isJumping = false, isGround = false, isDead = false;
     bool isMovable_S = true, isMovable_C = true;
 
     // Getter
@@ -60,18 +63,20 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
+        bulletManager = BulletManager.Instance;
 
         MaxHealth = 10;
         Health = MaxHealth;
 
-        MaxBullet = 10;
+        MaxBullet = 15;
         Bullet = MaxBullet;
 
         Piece = 0;
         PiecePerBullet = 5;
 
-        Speed = 0.1f;
-        JumpPower = 20.0f;
+//<<<<<<< HEAD
+//        Speed = 0.1f;
+//        JumpPower = 20.0f;
     }
     
     // 플레이어 초기화
@@ -79,6 +84,10 @@ public class PlayerScript : MonoBehaviour
     {
         _State = STATE.IDLE;
         rigid = gameObject.GetComponent<Rigidbody>();
+//=======
+        Speed = 0.15f;
+        JumpPower = 35.0f;
+//>>>>>>> Dev_LSY
 
         MaxHealth = 10;
         Health = MaxHealth;
@@ -95,9 +104,21 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
-        jump();
-        move();
-        attack();
+        if (Health <= 0)
+        {
+            if (!isDead)
+
+                dead();
+            else
+                ;
+        }
+        else
+        {
+            jump();
+            move();
+            attack();
+        }
+
     }
 
     void FixedUpdate()
@@ -119,7 +140,7 @@ public class PlayerScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(this.gameObject + " " + collision.gameObject);
+        //Debug.Log(this.gameObject + " " + collision.gameObject);
         if (collision.gameObject.CompareTag("Floor"))
         {
             isJumping = false;
@@ -249,8 +270,10 @@ public class PlayerScript : MonoBehaviour
         {
             if (Bullet > 0)
             {
-                Debug.Log("Shot!");
+                //Debug.Log("Shot!");
                 Anim.SetTrigger("doAttack");
+                //transform.GetChild(2).GetComponent<BulletManager>().Attack();
+                bulletManager.Attack();
                 Bullet--;
             }
             else
@@ -258,6 +281,14 @@ public class PlayerScript : MonoBehaviour
                 Debug.Log("No Bullet");
             }
         }
+    }
+
+    void dead()
+    {
+        isDead = true;
+        this.GetComponent<MeshCollider>().isTrigger = false;
+        Anim.SetTrigger("doDead");
+
     }
 
     // Catcher 가 유성조각 획득 시 실행하는 함수, Fragment 스크립트에서 호출됨
