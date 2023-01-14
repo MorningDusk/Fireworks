@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UIManager : SingletonMonoBehaviour<UIManager>
 {
@@ -62,6 +63,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         }
     }
 
+    // 운석 충돌시 플레이어를 따라다니는 HP UI 변경하는 함수
     public void UI_changeHP(PlayerScript.Player_Type _Type)
     {
         PlayerScript player;
@@ -77,5 +79,20 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 GameObject.Find("UI/Collecter").transform.GetChild(0).GetComponent<Slider>().value = (float) player.GetHealth() / player.GetMaxHealth();
                 break;
         }
+    }
+
+
+    // 오른쪽 상단 유성 조각 획득시 UI 변경하는 함수
+    public void UI_changeFragment()
+    {
+        PlayerScript player = GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>();
+
+        string displayText = ""; // 보여질 텍스트
+        displayText = player.GetPiece().ToString() + "/" + player.GetPiecePerBullet().ToString();
+        GameObject.Find("FragmentText").GetComponent<TextMeshProUGUI>().text = displayText;
+
+        // UX
+        DOTween.Sequence().Append(GameObject.Find("FragmentText").transform.DOScale(1.1f, 0.2f)).Append(GameObject.Find("FragmentText").transform.DOScale(1.0f, 0.2f));
+
     }
 }

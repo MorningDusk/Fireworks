@@ -1347,7 +1347,7 @@ GameObject:
   - component: {fileID: 7684677631966583112}
   - component: {fileID: 1908568361731728875}
   m_Layer: 5
-  m_Name: SmallMeteoPanel
+  m_Name: FragmentPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1639,7 +1639,7 @@ GameObject:
   - component: {fileID: 5676658688949184335}
   - component: {fileID: 8661891541565930106}
   m_Layer: 5
-  m_Name: SmallMeteoText
+  m_Name: FragmentText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1851,7 +1851,7 @@ GameObject:
   - component: {fileID: 277028715904405001}
   - component: {fileID: 4511946909631000827}
   m_Layer: 5
-  m_Name: SmallMeteoImage
+  m_Name: FragmentImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

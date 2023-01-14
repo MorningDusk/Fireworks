@@ -16,7 +16,7 @@ public class PlayerScript : MonoBehaviour
     Player_Type _Type;
 
     [SerializeField]
-    int Health, MaxHealth, Piece, PiecePerBullet;
+    int Health, MaxHealth, Bullet, MaxBullet, Piece, PiecePerBullet;
 
     [SerializeField]
     float Speed, JumpPower;
@@ -42,6 +42,9 @@ public class PlayerScript : MonoBehaviour
 
         MaxHealth = 10;
         Health = MaxHealth;
+
+        MaxBullet = 10;
+        Bullet = MaxBullet;
 
         Piece = 0;
         PiecePerBullet = 5;
@@ -149,6 +152,19 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-
+    // Catcher 가 유성조각 획득 시 실행하는 함수, Fragment 스크립트에서 호출됨
+    public void catchFragment()
+    {
+        Piece++; // 조각 획득
+        if (Piece % PiecePerBullet==0) // 만약 최대 유성조각 수까지 유성조각을 모으면
+        {
+            Piece = 0; // 조각 초기화
+            if (Bullet != MaxBullet) // 탄약수가 최대가 아니라면
+            {
+                Bullet++; // 총알 개수 증가
+            }; 
+        }
+        UIManager.Instance.UI_changeFragment(); // UI 변경
+    }
     
 }
