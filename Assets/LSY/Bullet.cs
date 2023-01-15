@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
     {
         bulletManager = BulletManager.Instance;
         _effect = GetComponent<VisualEffect>();
-        BulletSpeed = 5.0f;
+        BulletSpeed = 13.0f;
         pos = transform.position;
     }
 
@@ -48,6 +48,8 @@ public class Bullet : MonoBehaviour
             Debug.Log(gameObject + " " + other.gameObject + " Trigger enter");
             this.GetComponent<SphereCollider>().enabled = false;
             other.GetComponent<Meteor>().Meteor_Split();
+
+            this.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
 
 
         }

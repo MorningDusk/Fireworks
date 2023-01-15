@@ -7,83 +7,98 @@ using DG.Tweening;
 
 public class UIManager : SingletonMonoBehaviour<UIManager>
 {
-    // °ÔÀÓ¸Å´ÏÀú, Start¿¡¼­ °´Ã¼ ¹Þ¾Æ¿È
+    // ï¿½ï¿½ï¿½Ó¸Å´ï¿½ï¿½ï¿½, Startï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½Þ¾Æ¿ï¿½
     GameManager gm;
 
-    // È­¸é »ó´Ü Å¸ÀÌ¸Ó
+    // È­ï¿½ï¿½ ï¿½ï¿½ï¿½ Å¸ï¿½Ì¸ï¿½
     public int totalSecond = 0;
     private bool isTimerAble = true;
 
     private TextMeshProUGUI timeMinText;
     private TextMeshProUGUI timeSecText;
 
-    // Å¸ÀÌÆ²È­¸é ÃÊ±â È­¸é ÀÎµ¦½º
+    // Å¸ï¿½ï¿½Æ²È­ï¿½ï¿½ ï¿½Ê±ï¿½ È­ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½
     private int titleCurScreenIdx = 1;
 
-    // ¹öÆ° Å¬¸¯µÇ¸é 
+    // ï¿½ï¿½Æ° Å¬ï¿½ï¿½ï¿½Ç¸ï¿½ 
     bool BtnisClicked = true;
     public int Get_Time() { return totalSecond; }
 
     private void Start() {
-        // ½Ì±ÛÅæ ºÒ·¯¿À±â
+        // ï¿½Ì±ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
         gm = GameManager.Instance;
 
-        // ÅØ½ºÆ® ºÒ·¯¿À±â
+        // ï¿½Ø½ï¿½Æ® ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
         timeMinText = GameObject.Find("TimeMin").GetComponent<TextMeshProUGUI>();
         timeSecText = GameObject.Find("TimeSec").GetComponent<TextMeshProUGUI>();
 
-        // Ã³À½¿¡ ÀÎ°ÔÀÓ UI ºñÈ°¼ºÈ­
+        // Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½Î°ï¿½ï¿½ï¿½ UI ï¿½ï¿½È°ï¿½ï¿½È­
         GameObject.Find("UI").transform.GetChild(0).gameObject.SetActive(false);
-        // ¸ÞÀÎÈ­¸é UI È°¼ºÈ­
+        // ï¿½ï¿½ï¿½ï¿½È­ï¿½ï¿½ UI È°ï¿½ï¿½È­
         GameObject.Find("UI").transform.GetChild(1).gameObject.SetActive(true);
 
-        // ¸ÞÀÎÅ¸ÀÌÆ² ÀÌÀü/´ÙÀ½ ¹öÆ° È°¼ºÈ­/ºñÈ°¼ºÈ­ Ã¼Å©
+        // ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ï¿½Æ² ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° È°ï¿½ï¿½È­/ï¿½ï¿½È°ï¿½ï¿½È­ Ã¼Å©
         //StartCoroutine(checkButtonAble());
     }
 
 
-    // °ÔÀÓ ½ÃÀÛ ½Ã UI, GameManager¿¡¼­ È£Ãâ
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ UI, GameManagerï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½
     public void UI_GameStart()
     {
-        // UI º¯°æ ¹× UX
-        GameObject.Find("UI").transform.GetChild(0).gameObject.SetActive(true); // ÀÎ°ÔÀÓ UI È°¼ºÈ­
-        GameObject.Find("UI").transform.GetChild(0).GetComponent<CanvasGroup>().DOFade(0, 0.0f); // Ã³À½¿¡ ÀÎ°ÔÀÓ È­¸é Åõ¸íÈ­µÈ »óÅÂ
-        GameObject.Find("UI").transform.GetChild(0).GetComponent<CanvasGroup>().DOFade(1.0f, 0.5f); // ÀÎ°ÔÀÓ ÆäÀÌµåÀÎ
-        GameObject.Find("UI").transform.GetChild(1).GetComponent<CanvasGroup>().DOFade(0, 0.5f); // ¸ÞÀÎÈ­¸é ÆäÀÌµå¾Æ¿ô
-        StartCoroutine(deleteMainUIFade(0.5f)); // 0.5ÃÊ µÚ¿¡ ¸ÞÀÎÈ­¸é ºñÈ°¼ºÈ­
+        // UI ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ UX
+        GameObject.Find("UI").transform.GetChild(0).gameObject.SetActive(true); // ï¿½Î°ï¿½ï¿½ï¿½ UI È°ï¿½ï¿½È­
+        GameObject.Find("UI").transform.GetChild(0).GetComponent<CanvasGroup>().DOFade(0, 0.0f); // Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½Î°ï¿½ï¿½ï¿½ È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        GameObject.Find("UI").transform.GetChild(0).GetComponent<CanvasGroup>().DOFade(1.0f, 0.5f); // ï¿½Î°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½
+        GameObject.Find("UI").transform.GetChild(1).GetComponent<CanvasGroup>().DOFade(0, 0.5f); // ï¿½ï¿½ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½Æ¿ï¿½
+        StartCoroutine(deleteMainUIFade(0.5f)); // 0.5ï¿½ï¿½ ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
 
-        // È­¸é»ó´Ü ¹«ÇÑÅ¸ÀÌ¸Ó ½ÃÀÛ
+        // È­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å¸ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½
         StartCoroutine(SecondIncrease());
 
-        // °ø°ÝÀÚ/¼öÁýÀÚ Ã¼·Â Ç¥½Ã ½ÃÀÛ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½ Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        StartCoroutine(DisplayLightHouseHP());
+
         StartCoroutine(DisplayAttackerHP());
         StartCoroutine(DisplayCollecterHP());
     }
 
-    // Áö¿¬½Ã°£ µÚ¿¡ ¸ÞÀÎÈ­¸é ºñÈ°¼ºÈ­
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ã°ï¿½ ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
     IEnumerator deleteMainUIFade(float time)
     {
         yield return new WaitForSeconds(time);
         GameObject.Find("UI").transform.GetChild(1).gameObject.SetActive(false);
     }
 
-    // °ÔÀÓ ¿À¹ö ½Ã UI, GameManager¿¡¼­ È£Ãâ
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ UI, GameManagerï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½
     public void UI_GameOver()
     {
-        // °ÔÀÓ¿À¹ö È­¸é Å¸ÀÌ¸Ó Ç¥½Ã
+        // ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ È­ï¿½ï¿½ Å¸ï¿½Ì¸ï¿½ Ç¥ï¿½ï¿½
         //string text1 = totalSecond
 
-        // UI º¯°æ ¹× UX
+        // UI ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ UX
         GameObject.Find("UI").transform.GetChild(2).gameObject.SetActive(true);
-        GameObject.Find("UI").transform.GetChild(2).GetComponent<CanvasGroup>().DOFade(0, 0); // °ÔÀÓ¿À¹ö È­¸é Ã³À½¿¡ ¾Èº¸ÀÌ°Ô
-        GameObject.Find("UI").transform.GetChild(2).GetComponent<CanvasGroup>().DOFade(1, 0.5f); // °ÔÀÓ¿À¹ö È­¸é ÆäÀÌµåÀÎ
+        GameObject.Find("UI").transform.GetChild(2).GetComponent<CanvasGroup>().DOFade(0, 0); // ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ È­ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½Èºï¿½ï¿½Ì°ï¿½
+        GameObject.Find("UI").transform.GetChild(2).GetComponent<CanvasGroup>().DOFade(1, 0.5f); // ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ È­ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½
 
-        // È­¸é»ó´Ü ¹«ÇÑ½Ã°£ Áß´Ü
+        // È­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ñ½Ã°ï¿½ ï¿½ß´ï¿½
         StopCoroutine(SecondIncrease());
 
-        // °ø°ÝÀÚ/¼öÁýÀÚ Ã¼·Â Ç¥½Ã Áß´Ü
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½ Ç¥ï¿½ï¿½ ï¿½ß´ï¿½
+        StopCoroutine(DisplayLightHouseHP());
+
         StopCoroutine(DisplayAttackerHP());
         StopCoroutine(DisplayCollecterHP());
+    }
+
+    IEnumerator DisplayLightHouseHP()
+    {
+        while (!gm.getGameOver())
+        {
+            Vector3 locationHP = Camera.main.WorldToScreenPoint(GameObject.Find("Lighthouse").transform.position);
+            GameObject.Find("LightHouseHP").transform.position = new Vector3(locationHP.x, locationHP.y + 500f, locationHP.z);
+
+            yield return new WaitForSeconds(0.01f);
+        }
     }
 
     IEnumerator DisplayAttackerHP()
@@ -92,7 +107,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         {
             Vector3 locationHP = Camera.main.WorldToScreenPoint(GameObject.Find("Players").transform.GetChild(0).position);
 //<<<<<<< HEAD
-            GameObject.Find("UI/InGame/Attacker").transform.position = new Vector3(locationHP.x, locationHP.y + 100f, locationHP.z);
+            GameObject.Find("UI/InGame/Attacker").transform.position = new Vector3(locationHP.x, locationHP.y + 125f, locationHP.z);
 //=======
 //            GameObject.Find("UI/Attacker").transform.position = new Vector3(locationHP.x,locationHP.y + 120f,locationHP.z);
 //>>>>>>> Dev_LSY
@@ -106,7 +121,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         {
             Vector3 locationHP = Camera.main.WorldToScreenPoint(GameObject.Find("Players").transform.GetChild(1).position);
 //<<<<<<< HEAD
-            GameObject.Find("UI/InGame/Collecter").transform.position = new Vector3(locationHP.x, locationHP.y + 100f, locationHP.z);
+            GameObject.Find("UI/InGame/Collecter").transform.position = new Vector3(locationHP.x, locationHP.y + 125f, locationHP.z);
 //=======
 //            GameObject.Find("UI/Collecter").transform.position = new Vector3(locationHP.x, locationHP.y + 120f, locationHP.z); 
 //>>>>>>> Dev_LSY
@@ -129,7 +144,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         }
     }
 
-    // ¿î¼® Ãæµ¹½Ã ÇÃ·¹ÀÌ¾î¸¦ µû¶ó´Ù´Ï´Â HP UI º¯°æÇÏ´Â ÇÔ¼ö
+    // ï¿½î¼® ï¿½æµ¹ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½ï¿½Ù´Ï´ï¿½ HP UI ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public void UI_changeHP(PlayerScript.Player_Type _Type)
     {
         PlayerScript player;
@@ -147,12 +162,16 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         }
     }
 
-    // ¿ÞÂÊ »ó´Ü ºÒ²É³îÀÌ ÃÑÅº¼ö UI º¯°æÇÏ´Â ÇÔ¼ö
+    public void UI_changeHP_Lighthouse()
+    {
+        GameObject.Find("LightHouseHP").transform.GetChild(0).GetComponent<Slider>().value = (float)LightHouse.Instance.get_Durability() / LightHouse.Instance.get_MaxDurability();
+    }
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ò²É³ï¿½ï¿½ï¿½ ï¿½ï¿½Åºï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public void UI_changeBullet()
     {
         PlayerScript player = GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>();
 
-        string displayText = ""; // º¸¿©Áú ÅØ½ºÆ®
+        string displayText = ""; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½Æ®
         displayText = player.GetBullet().ToString() + "/" + player.GetMaxBullet().ToString();
         GameObject.Find("BulletText").GetComponent<TextMeshProUGUI>().text = displayText;
 
@@ -161,12 +180,12 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
     }
 
-    // ¿À¸¥ÂÊ »ó´Ü À¯¼º Á¶°¢ È¹µæ½Ã UI º¯°æÇÏ´Â ÇÔ¼ö
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È¹ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public void UI_changeFragment()
     {
         PlayerScript player = GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>();
 
-        string displayText = ""; // º¸¿©Áú ÅØ½ºÆ®
+        string displayText = ""; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½Æ®
         displayText = player.GetPiece().ToString() + "/" + player.GetPiecePerBullet().ToString();
         GameObject.Find("FragmentText").GetComponent<TextMeshProUGUI>().text = displayText;
 
@@ -178,10 +197,10 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     int reviveCnt_SHOOTER = 10;
     int reviveCnt_CATCHER = 10;
 
-    // ÇÃ·¹ÀÌ¾î ºÎÈ° UI
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½È° UI
     public void UI_revivePlayer(PlayerScript.Player_Type playerType)
     {
-        // ÇÃ·¹ÀÌ¾î Å¸ÀÔ
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Å¸ï¿½ï¿½
         PlayerScript.Player_Type type = playerType;
 
         switch (type)
@@ -199,12 +218,12 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
     
 
-    // ÇÃ·¹ÀÌ¾î ºÎÈ° UI - 0.5ÃÊ¸¶´Ù 0.1¾¿ Áõ°¡
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½È° UI - 0.5ï¿½Ê¸ï¿½ï¿½ï¿½ 0.1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void UI_increaseHealth_SHOOTER()
     {
         //Debug.Log(GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>().GetPlayerState());
-        //if (GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>().GetPlayerState() != PlayerScript.STATE.DEAD) return; // »ì¾ÆÀÖ´Â »óÅÂ¸é ½ÇÇàX
-        if(GameObject.Find("Attacker/HP").GetComponent<Slider>().value == 1) return; //HP °¡µæÂ÷¸é ½ÇÇàX
+        //if (GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>().GetPlayerState() != PlayerScript.STATE.DEAD) return; // ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½ï¿½ï¿½X
+        if(GameObject.Find("Attacker/HP").GetComponent<Slider>().value == 1) return; //HP ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½X
 
         GameObject.Find("Attacker/HP").GetComponent<Slider>().value += 0.1f;
         Invoke("UI_increaseHealth_SHOOTER", 0.5f);
@@ -212,8 +231,8 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
     public void UI_increaseHealth_CATCHER()
     {
-        //if (GameObject.Find("Players").transform.GetChild(1).GetComponent<PlayerScript>().GetPlayerState() != PlayerScript.STATE.DEAD) return;// »ì¾ÆÀÖ´Â »óÅÂ¸é ½ÇÇàX
-        if (GameObject.Find("Collecter/HP").GetComponent<Slider>().value == 1) return; //HP °¡µæÂ÷¸é ½ÇÇàX
+        //if (GameObject.Find("Players").transform.GetChild(1).GetComponent<PlayerScript>().GetPlayerState() != PlayerScript.STATE.DEAD) return;// ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½ï¿½ï¿½X
+        if (GameObject.Find("Collecter/HP").GetComponent<Slider>().value == 1) return; //HP ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½X
 
         GameObject.Find("Collecter/HP").GetComponent<Slider>().value += 0.1f;
         Invoke("UI_increaseHealth_CATCHER", 0.5f);
@@ -222,10 +241,10 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     public void PrevButton()
     {
         if (titleCurScreenIdx == 1) return;
-        // ÇöÀçÄ«µå ´ÙÀ½ À§Ä¡·Î ³Ñ±ä´Ù
+        // ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ñ±ï¿½ï¿½
         GameObject.Find("TitleTutorials/Image" + titleCurScreenIdx).transform.DOLocalMoveX(2000f, 0.5f).SetEase(Ease.InOutExpo);
         titleCurScreenIdx--;
-        // ÀÌÀüÄ«µå¸¦ ÇöÀçÄ«µåÀ§Ä¡·Î
+        // ï¿½ï¿½ï¿½ï¿½Ä«ï¿½å¸¦ ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½
         GameObject.Find("TitleTutorials/Image" + titleCurScreenIdx).transform.DOLocalMoveX(0f, 0.5f).SetEase(Ease.InOutExpo);
 
     }
@@ -233,17 +252,17 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     public void NextButton()
     {
         if (titleCurScreenIdx == 3) return;
-        // ÇöÀçÄ«µå ÀÌÀü À§Ä¡·Î ³Ñ±ä´Ù
+        // ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ñ±ï¿½ï¿½
         GameObject.Find("TitleTutorials/Image" + titleCurScreenIdx).transform.DOLocalMoveX(-2000f, 0.5f).SetEase(Ease.InOutExpo);
         titleCurScreenIdx++;
-        // ´ÙÀ½Ä«µå¸¦ ÇöÀçÄ«µåÀ§Ä¡·Î
+        // ï¿½ï¿½ï¿½ï¿½Ä«ï¿½å¸¦ ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½
         GameObject.Find("TitleTutorials/Image" + titleCurScreenIdx).transform.DOLocalMoveX(0f, 0.5f).SetEase(Ease.InOutExpo);
     }
 
     IEnumerator checkButtonAble()
     {
         while (gm.getIsStart() == false)
-        {  // °ÔÀÓ½ÃÀÛ ¾ÈÇß´Ù¸é °Ë»ç
+        {  // ï¿½ï¿½ï¿½Ó½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß´Ù¸ï¿½ ï¿½Ë»ï¿½
             if (titleCurScreenIdx == 1) GameObject.Find("prev").GetComponent<Image>().DOFade(0.2f, 0.4f);
             if (titleCurScreenIdx == 3) GameObject.Find("next").GetComponent<Image>().DOFade(0.2f, 0.4f);
             yield return new WaitForSeconds(0.5f);
@@ -251,7 +270,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         if (gm.getIsStart() == true) StopCoroutine(checkButtonAble());
     }
 
-    // ¸ÞÀÎ Å¸ÀÌÆ²È­¸é prev/next ¹öÆ°
+    // ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½Æ²È­ï¿½ï¿½ prev/next ï¿½ï¿½Æ°
     public void Btn_MouseOver(GameObject selfObj)
     {
         selfObj.transform.DOScale(1.2f, 0.3f);
@@ -276,7 +295,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     }
 
 
-    // ½ºÅ¸Æ®È­¸é ½ºÅ¸Æ® ¹öÆ°
+    // ï¿½ï¿½Å¸Æ®È­ï¿½ï¿½ ï¿½ï¿½Å¸Æ® ï¿½ï¿½Æ°
     public void StartBtn_MouseOver(GameObject selfObj)
     {
         selfObj.transform.DOScale(1.2f, 0.3f);
