@@ -97,6 +97,9 @@ public class Meteor : MonoBehaviour
         switch (other.tag)
         {
             case "Player":
+
+                if (GameManager.Instance.getGameOver()) return;
+
                 // 플레이어 HP 감소
                 switch (this.MeteorType)
                 {

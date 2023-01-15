@@ -71,19 +71,26 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         GameObject soundObject = null;
 
         // 사운드 
-        soundObject = new GameObject("Sound");
-        soundObject.transform.parent = GameObject.Find("SoundManager/BGM").transform;
-        AudioSource audioSource = soundObject.AddComponent<AudioSource>(); // 컴포넌트 생성
-        audioSource.clip = GetOrAddAudioClip(soundName, SoundType.BGM); // 음악 불러오기
-        audioSource.loop = true; // 반복재생
-        audioSource.Play(); // 음악 재생
+        if (GameObject.Find("SoundManager/BGM").transform.childCount == 0)
+        {
+            soundObject = new GameObject("Sound");
+            soundObject.transform.parent = GameObject.Find("SoundManager/BGM").transform;
+            AudioSource audioSource = soundObject.AddComponent<AudioSource>(); // 컴포넌트 생성
+            audioSource.clip = GetOrAddAudioClip(soundName, SoundType.BGM); // 음악 불러오기
+            audioSource.loop = true; // 반복재생
+            audioSource.Play(); // 음악 재생
+        }
+        else
+        {
+            GameObject.Find("SoundManager/BGM/Sound").GetComponent<AudioSource>().Play();
+        }
     }
 
     // 사운드 정지 - 배경음
     public void pauseBGM()
     {
         // 사운드 객체 불러오기
-        GameObject soundObject = GameObject.Find("SoundManager/BGM");
+        GameObject soundObject = GameObject.Find("SoundManager/BGM/Sound");
         if (soundObject == null) return;
         soundObject.GetComponent<AudioSource>().Pause();
     }
@@ -92,7 +99,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     public void stopBGM()
     {
         // 사운드 객체 불러오기
-        GameObject soundObject = GameObject.Find("SoundManager/BGM");
+        GameObject soundObject = GameObject.Find("SoundManager/BGM/Sound");
         if (soundObject == null) return;
         soundObject.GetComponent<AudioSource>().Stop();
     }

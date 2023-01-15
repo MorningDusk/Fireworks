@@ -67,6 +67,18 @@ public class PlayerScript : MonoBehaviour
     {
         bulletManager = BulletManager.Instance;
 
+        playerInit();
+    }
+    
+    // 플레이어 초기화
+    public void playerInit()
+    {
+        _State = STATE.IDLE;
+        rigid = gameObject.GetComponent<Rigidbody>();
+
+        Speed = 0.15f;
+        JumpPower = 35.0f;
+
         MaxHealth = 10;
         Health = MaxHealth;
 
@@ -75,33 +87,6 @@ public class PlayerScript : MonoBehaviour
 
         Piece = 0;
         PiecePerBullet = 5;
-
-        //<<<<<<< HEAD
-        Speed = 0.15f;
-        JumpPower = 35.0f;
-    }
-    
-    // 플레이어 초기화
-    public void playerInit()
-    {
-        _State = STATE.IDLE;
-        rigid = gameObject.GetComponent<Rigidbody>();
-//=======
-        Speed = 0.15f;
-        JumpPower = 35.0f;
-//>>>>>>> Dev_LSY
-
-        MaxHealth = 10;
-        Health = MaxHealth;
-
-        MaxBullet = 10;
-        Bullet = MaxBullet;
-
-        Piece = 0;
-        PiecePerBullet = 5;
-
-        Speed = 0.1f;
-        JumpPower = 20.0f;
     }
 
     private void Update()
@@ -210,7 +195,6 @@ public class PlayerScript : MonoBehaviour
             }
             else
             {
-                Debug.Log("asdf");
                 //transform.Translate(moveVec * Speed);
                 transform.position += moveVec * Speed;
                 transform.LookAt(transform.position + moveVec);

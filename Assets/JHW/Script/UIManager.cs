@@ -45,12 +45,16 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     // 게임 시작 시 UI, GameManager에서 호출
     public void UI_GameStart()
     {
+        // 게임 상단 타이머
+        totalSecond = 0;
+
         // UI 변경 및 UX
         GameObject.Find("UI").transform.GetChild(0).gameObject.SetActive(true); // 인게임 UI 활성화
         GameObject.Find("UI").transform.GetChild(0).GetComponent<CanvasGroup>().DOFade(0, 0.0f); // 처음에 인게임 화면 투명화된 상태
         GameObject.Find("UI").transform.GetChild(0).GetComponent<CanvasGroup>().DOFade(1.0f, 0.5f); // 인게임 페이드인
         GameObject.Find("UI").transform.GetChild(1).GetComponent<CanvasGroup>().DOFade(0, 0.5f); // 메인화면 페이드아웃
-        StartCoroutine(deleteMainUIFade(0.5f)); // 0.5초 뒤에 메인화면 비활성화
+        GameObject.Find("UI").transform.GetChild(2).GetComponent<CanvasGroup>().DOFade(0, 0.5f); // 게임오버화면 페이드아웃
+        Invoke("deleteMainUIFade",0.5f); // 0.5초 뒤에 메인화면 비활성화
 
         // 화면상단 무한타이머 시작
         StartCoroutine(SecondIncrease());
@@ -58,6 +62,13 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         // 공격자/수집자 체력 표시 시작
         StartCoroutine(DisplayAttackerHP());
         StartCoroutine(DisplayCollecterHP());
+    }
+
+    //타이틀/게임오버 화면 지연시간 뒤 비활성화
+    public void deleteMainUIFade()
+    {
+        if (GameObject.Find("UI").transform.GetChild(1).gameObject.activeSelf == true) GameObject.Find("UI").transform.GetChild(1).gameObject.SetActive(false);
+        if (GameObject.Find("UI").transform.GetChild(2).gameObject.activeSelf == true) GameObject.Find("UI").transform.GetChild(2).gameObject.SetActive(false);
     }
 
     // 지연시간 뒤에 메인화면 비활성화
@@ -70,13 +81,24 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     // 게임 오버 시 UI, GameManager에서 호출
     public void UI_GameOver()
     {
-        // 게임오버 화면 타이머 표시
-        //string text1 = totalSecond
+        
 
         // UI 변경 및 UX
         GameObject.Find("UI").transform.GetChild(2).gameObject.SetActive(true);
         GameObject.Find("UI").transform.GetChild(2).GetComponent<CanvasGroup>().DOFade(0, 0); // 게임오버 화면 처음에 안보이게
         GameObject.Find("UI").transform.GetChild(2).GetComponent<CanvasGroup>().DOFade(1, 0.5f); // 게임오버 화면 페이드인
+
+        // 게임오버 화면 타이머 표시
+        int textHour = totalSecond / 3600;
+        int textMin = (totalSecond / 60) % 3600;
+        int textSec = totalSecond % 60;
+        string toDisplayHour = textHour.ToString();
+        string toDisplayMin = textMin.ToString();
+        string toDisplaySec = textSec.ToString();
+        if (textHour < 10) toDisplayHour = "0" + textHour;
+        if (textMin < 10) toDisplayMin = "0" + textMin;
+        if (textSec < 10) toDisplaySec = "0" + textSec;
+        GameObject.Find("GameoverTimeText").GetComponent<TextMeshProUGUI>().text = toDisplayHour + " : " + toDisplayMin + " : " + toDisplaySec; // 타이머 변경
 
         // 화면상단 무한시간 중단
         StopCoroutine(SecondIncrease());
@@ -86,16 +108,26 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         StopCoroutine(DisplayCollecterHP());
     }
 
+    // 게임오버 화면 - 메인(타이틀)화면 버튼
+    public void Btn_ToMain()
+    {
+        // 메인 타이틀 화면으로
+        GameObject.Find("UI").transform.GetChild(0).gameObject.SetActive(false);
+        GameObject.Find("UI").transform.GetChild(1).gameObject.SetActive(true);
+        GameObject.Find("UI").transform.GetChild(2).gameObject.SetActive(false);
+
+        // ux
+        GameObject.Find("UI").transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().DOFade(1.0f,0.5f);
+    }
+
+    // 게임오버 화면 - Replay 버튼
+
     IEnumerator DisplayAttackerHP()
     {
         while (!gm.getGameOver())
         {
             Vector3 locationHP = Camera.main.WorldToScreenPoint(GameObject.Find("Players").transform.GetChild(0).position);
-//<<<<<<< HEAD
-            GameObject.Find("UI/InGame/Attacker").transform.position = new Vector3(locationHP.x, locationHP.y + 100f, locationHP.z);
-//=======
-//            GameObject.Find("UI/Attacker").transform.position = new Vector3(locationHP.x,locationHP.y + 120f,locationHP.z);
-//>>>>>>> Dev_LSY
+            GameObject.Find("UI/InGame/Attacker").transform.position = new Vector3(locationHP.x, locationHP.y + 120f, locationHP.z);
             yield return new WaitForSeconds(0.01f);
         }
     }
@@ -105,11 +137,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         while (!gm.getGameOver())
         {
             Vector3 locationHP = Camera.main.WorldToScreenPoint(GameObject.Find("Players").transform.GetChild(1).position);
-//<<<<<<< HEAD
-            GameObject.Find("UI/InGame/Collecter").transform.position = new Vector3(locationHP.x, locationHP.y + 100f, locationHP.z);
-//=======
-//            GameObject.Find("UI/Collecter").transform.position = new Vector3(locationHP.x, locationHP.y + 120f, locationHP.z); 
-//>>>>>>> Dev_LSY
+            GameObject.Find("UI/InGame/Collecter").transform.position = new Vector3(locationHP.x, locationHP.y + 120f, locationHP.z);
             yield return new WaitForSeconds(0.01f);
         }
     }
@@ -175,9 +203,6 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     }
 
 
-    int reviveCnt_SHOOTER = 10;
-    int reviveCnt_CATCHER = 10;
-
     // 플레이어 부활 UI
     public void UI_revivePlayer(PlayerScript.Player_Type playerType)
     {
@@ -204,6 +229,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     {
         //Debug.Log(GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>().GetPlayerState());
         //if (GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>().GetPlayerState() != PlayerScript.STATE.DEAD) return; // 살아있는 상태면 실행X
+        if (GameObject.Find("Attacker/HP") == null) return;
         if(GameObject.Find("Attacker/HP").GetComponent<Slider>().value == 1) return; //HP 가득차면 실행X
 
         GameObject.Find("Attacker/HP").GetComponent<Slider>().value += 0.1f;
@@ -213,6 +239,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     public void UI_increaseHealth_CATCHER()
     {
         //if (GameObject.Find("Players").transform.GetChild(1).GetComponent<PlayerScript>().GetPlayerState() != PlayerScript.STATE.DEAD) return;// 살아있는 상태면 실행X
+        if (GameObject.Find("Attacker/HP") == null) return;
         if (GameObject.Find("Collecter/HP").GetComponent<Slider>().value == 1) return; //HP 가득차면 실행X
 
         GameObject.Find("Collecter/HP").GetComponent<Slider>().value += 0.1f;
