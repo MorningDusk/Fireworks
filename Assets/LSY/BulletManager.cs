@@ -46,6 +46,7 @@ public class BulletManager : SingletonMonoBehaviour<BulletManager>
     public void Bullet_pushback(Bullet bullet)
     {
         bullet.gameObject.SetActive(false);
+        bullet.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
         bullet.transform.SetParent(Bullet_Pool);
         bullet.transform.localPosition = Bullet_Pool.localPosition;
         m_bullet.push(bullet);

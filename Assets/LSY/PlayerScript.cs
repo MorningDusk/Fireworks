@@ -87,6 +87,36 @@ public class PlayerScript : MonoBehaviour
 
         Piece = 0;
         PiecePerBullet = 5;
+<<<<<<< HEAD
+=======
+
+        //<<<<<<< HEAD
+        Speed = 0.6f;
+        JumpPower = 35.0f;
+    }
+    
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ê±ï¿½È­
+    public void playerInit()
+    {
+        _State = STATE.IDLE;
+        rigid = gameObject.GetComponent<Rigidbody>();
+//=======
+        Speed = 0.15f;
+        JumpPower = 35.0f;
+//>>>>>>> Dev_LSY
+
+        MaxHealth = 10;
+        Health = MaxHealth;
+
+        MaxBullet = 10;
+        Bullet = MaxBullet;
+
+        Piece = 0;
+        PiecePerBullet = 5;
+
+        Speed = 0.1f;
+        JumpPower = 20.0f;
+>>>>>>> LAST
     }
 
     private void Update()
@@ -114,14 +144,14 @@ public class PlayerScript : MonoBehaviour
         move_Catcher = 0f;
 
         if (Input.GetKey(KeyCode.A))
-            move_Shooter -= 1f;
-        if (Input.GetKey(KeyCode.D))
             move_Shooter += 1f;
+        if (Input.GetKey(KeyCode.D))
+            move_Shooter -= 1f;
 
         if (Input.GetKey(KeyCode.LeftArrow))
-            move_Catcher -= 1f;
-        if (Input.GetKey(KeyCode.RightArrow))
             move_Catcher += 1f;
+        if (Input.GetKey(KeyCode.RightArrow))
+            move_Catcher -= 1f;
 
     }
 
@@ -195,6 +225,10 @@ public class PlayerScript : MonoBehaviour
             }
             else
             {
+<<<<<<< HEAD
+=======
+                // Debug.Log("asdf");
+>>>>>>> LAST
                 //transform.Translate(moveVec * Speed);
                 transform.position += moveVec * Speed;
                 transform.LookAt(transform.position + moveVec);
@@ -263,7 +297,7 @@ public class PlayerScript : MonoBehaviour
                 bulletManager.Attack();
                 Bullet--;
 
-                // ÁÂÃø »ó´Ü Bullet UI º¯°æ
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Bullet UI ï¿½ï¿½ï¿½ï¿½
                 UIManager.Instance.UI_changeBullet();
             }
             else
@@ -275,44 +309,44 @@ public class PlayerScript : MonoBehaviour
 
     void dead()
     {
-        if (isDead) return;// ÀÌ¹Ì Á×¾îÀÖ´Ù¸é ½ÇÇàX
+        if (isDead) return;// ï¿½Ì¹ï¿½ ï¿½×¾ï¿½ï¿½Ö´Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½X
         isDead = true;
 
         this.GetComponent<MeshCollider>().isTrigger = false;
         Anim.SetTrigger("doDead");
         StartCoroutine(revivePlayer());
 
-        GameManager.Instance.gameOverCheck(); // °ÔÀÓ¿À¹ö µÇÀÖ´ÂÁö Ã¼Å©
+        GameManager.Instance.gameOverCheck(); // ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ Ã¼Å©
     }
 
     
 
     IEnumerator revivePlayer()
     {
-        // HP Ã¤¿ì±â (ºÎÈ° UI)
+        // HP Ã¤ï¿½ï¿½ï¿½ (ï¿½ï¿½È° UI)
         UIManager.Instance.UI_revivePlayer(this.GetPlayerType());
 
-        // 5ÃÊ µÚ ºÎÈ°
+        // 5ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È°
         yield return new WaitForSeconds(5f);
         isDead = false;
         Health = MaxHealth;
         Anim.SetTrigger("doRevive");
     }
 
-    // Catcher °¡ À¯¼ºÁ¶°¢ È¹µæ ½Ã ½ÇÇàÇÏ´Â ÇÔ¼ö, Fragment ½ºÅ©¸³Æ®¿¡¼­ È£ÃâµÊ
+    // Catcher ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¹ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½, Fragment ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½
     public void catchFragment()
     {
-        Piece++; // Á¶°¢ È¹µæ
-        if (Piece % PiecePerBullet==0) // ¸¸¾à ÃÖ´ë À¯¼ºÁ¶°¢ ¼ö±îÁö À¯¼ºÁ¶°¢À» ¸ðÀ¸¸é
+        Piece++; // ï¿½ï¿½ï¿½ï¿½ È¹ï¿½ï¿½
+        if (Piece % PiecePerBullet==0) // ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         {
-            Piece = 0; // Á¶°¢ ÃÊ±âÈ­
-            if (Bullet != MaxBullet) // Åº¾à¼ö°¡ ÃÖ´ë°¡ ¾Æ´Ï¶ó¸é
+            Piece = 0; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
+            if (Bullet != MaxBullet) // Åºï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ë°¡ ï¿½Æ´Ï¶ï¿½ï¿½
             {
-                Bullet++; // ÃÑ¾Ë °³¼ö Áõ°¡
-                UIManager.Instance.UI_changeBullet(); // ÃÑ¾Ë °³¼ö Áõ°¡ÇÏ´Â ux
+                Bullet++; // ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                UIManager.Instance.UI_changeBullet(); // ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ux
             }; 
         }
-        UIManager.Instance.UI_changeFragment(); // UI º¯°æ
+        UIManager.Instance.UI_changeFragment(); // UI ï¿½ï¿½ï¿½ï¿½
     }
     
 }

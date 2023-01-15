@@ -21,6 +21,8 @@ public class Meteor : MonoBehaviour
     [SerializeField]
     public float MetSpeed;
 
+    int Damage = 0;
+
 
     public bool _enabled = false, _split = false;
     // Property
@@ -29,7 +31,18 @@ public class Meteor : MonoBehaviour
 
     void Start()
     {
-
+        switch(_Type)
+        {
+            case Meteor_Type.BIG:
+                Damage = 3;
+                break;
+            case Meteor_Type.MEDIUM:
+                Damage = 2;
+                break;
+            case Meteor_Type.SMALL:
+                Damage = 1;
+                break;
+        }
     }
     private void Awake()
     {
@@ -97,10 +110,14 @@ public class Meteor : MonoBehaviour
         switch (other.tag)
         {
             case "Player":
+<<<<<<< HEAD
 
                 if (GameManager.Instance.getGameOver()) return;
 
                 // ÇÃ·¹ÀÌ¾î HP °¨¼Ò
+=======
+                // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ HP ï¿½ï¿½ï¿½ï¿½
+>>>>>>> LAST
                 switch (this.MeteorType)
                 {
                     case Meteor_Type.BIG:
@@ -115,8 +132,9 @@ public class Meteor : MonoBehaviour
                         other.GetComponent<PlayerScript>().DecreaseHealth(1);
                         break;
                 }
-                // ÇÃ·¹ÀÌ¾î HP °¨¼Ò¿¡ µû¸¥ UI º¯°æ
-                UIManager.Instance.UI_changeHP(other.GetComponent<PlayerScript>().GetPlayerType());                
+                // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ HP ï¿½ï¿½ï¿½Ò¿ï¿½ ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½
+                UIManager.Instance.UI_changeHP(other.GetComponent<PlayerScript>().GetPlayerType());
+                UIManager.Instance.UI_changeHP_Lighthouse();
                 break;
 
             case "Floor":
@@ -130,6 +148,13 @@ public class Meteor : MonoBehaviour
             case "Wall":
 
                 meteorManager.Meteor_pushback(this);
+
+
+                break;
+
+            case "LightHouse":
+                meteorManager.Meteor_pushback(this);
+                other.GetComponent<LightHouse>().DecreaseHealth(Damage);
 
 
                 break;
