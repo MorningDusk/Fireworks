@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Anim: {fileID: 0}
+  bulletManager: {fileID: 0}
   _Type: 1
   _State: 0
   Health: 0
@@ -91,6 +92,7 @@ MonoBehaviour:
   JumpPower: 0
   isJumping: 0
   isGround: 0
+  isDead: 0
 --- !u!33 &7866975653249476344
 MeshFilter:
   m_ObjectHideFlags: 0
