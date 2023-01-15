@@ -49,7 +49,9 @@ public class PlayerScript : MonoBehaviour
     public int GetPiecePerBullet() { return PiecePerBullet; }
     public int GetBullet() { return Bullet; }
     public int GetMaxBullet() { return MaxBullet; }
+    public bool isPlayerDead() { return isDead; }
     public Player_Type GetPlayerType() { return _Type; }
+    public STATE GetPlayerState() { return _State; }
 
     // Setter
     public void DecreaseHealth(int Value) { Health -= Value; }
@@ -74,9 +76,9 @@ public class PlayerScript : MonoBehaviour
         Piece = 0;
         PiecePerBullet = 5;
 
-//<<<<<<< HEAD
-//        Speed = 0.1f;
-//        JumpPower = 20.0f;
+        //<<<<<<< HEAD
+        Speed = 0.15f;
+        JumpPower = 35.0f;
     }
     
     // 플레이어 초기화
@@ -208,6 +210,7 @@ public class PlayerScript : MonoBehaviour
             }
             else
             {
+                Debug.Log("asdf");
                 //transform.Translate(moveVec * Speed);
                 transform.position += moveVec * Speed;
                 transform.LookAt(transform.position + moveVec);
@@ -275,6 +278,9 @@ public class PlayerScript : MonoBehaviour
                 //transform.GetChild(2).GetComponent<BulletManager>().Attack();
                 bulletManager.Attack();
                 Bullet--;
+
+                // 좌측 상단 Bullet UI 변경
+                UIManager.Instance.UI_changeBullet();
             }
             else
             {
@@ -285,10 +291,28 @@ public class PlayerScript : MonoBehaviour
 
     void dead()
     {
+        if (isDead) return;// 이미 죽어있다면 실행X
         isDead = true;
+
         this.GetComponent<MeshCollider>().isTrigger = false;
         Anim.SetTrigger("doDead");
+        StartCoroutine(revivePlayer());
 
+        GameManager.Instance.gameOverCheck(); // 게임오버 되있는지 체크
+    }
+
+    
+
+    IEnumerator revivePlayer()
+    {
+        // HP 채우기 (부활 UI)
+        UIManager.Instance.UI_revivePlayer(this.GetPlayerType());
+
+        // 5초 뒤 부활
+        yield return new WaitForSeconds(5f);
+        isDead = false;
+        Health = MaxHealth;
+        Anim.SetTrigger("doRevive");
     }
 
     // Catcher 가 유성조각 획득 시 실행하는 함수, Fragment 스크립트에서 호출됨

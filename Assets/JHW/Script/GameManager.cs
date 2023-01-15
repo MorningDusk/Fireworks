@@ -39,6 +39,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         isGameOver = true;
         isStart = false;
+
+        UIManager.Instance.UI_GameOver();
     }
 
     public void GameRestart()
@@ -47,5 +49,17 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         isStart = true;
 
         UIManager.Instance.UI_GameStart();
+    }
+
+    public void gameOverCheck()
+    {
+        // 플레이어 2명 다 죽어있으면 게임오버
+        if (GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>().isPlayerDead()
+            && GameObject.Find("Players").transform.GetChild(1).GetComponent<PlayerScript>().isPlayerDead())
+        {
+            GameOver();
+        }
+
+
     }
 }

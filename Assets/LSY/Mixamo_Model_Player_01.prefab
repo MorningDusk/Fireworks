@@ -742,6 +742,7 @@ MonoBehaviour:
   JumpPower: 0
   isJumping: 0
   isGround: 0
+  isDead: 0
 --- !u!1 &7017683819831781958
 GameObject:
   m_ObjectHideFlags: 0
@@ -1315,6 +1316,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BulletManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3807781766163104469, guid: 7a65bc6af90413440b895a24a214278a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4352068272599343857, guid: 7a65bc6af90413440b895a24a214278a,
         type: 3}
       propertyPath: m_RootOrder
@@ -1368,6 +1374,11 @@ PrefabInstance:
     - target: {fileID: 4352068272599343857, guid: 7a65bc6af90413440b895a24a214278a,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5076755791183729616, guid: 7a65bc6af90413440b895a24a214278a,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -20,6 +20,8 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     // 타이틀화면 초기 화면 인덱스
     private int titleCurScreenIdx = 1;
 
+    // 버튼 클릭되면 
+    bool BtnisClicked = true;
     public int Get_Time() { return totalSecond; }
 
     private void Start() {
@@ -68,6 +70,9 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     // 게임 오버 시 UI, GameManager에서 호출
     public void UI_GameOver()
     {
+        // 게임오버 화면 타이머 표시
+        //string text1 = totalSecond
+
         // UI 변경 및 UX
         GameObject.Find("UI").transform.GetChild(2).gameObject.SetActive(true);
         GameObject.Find("UI").transform.GetChild(2).GetComponent<CanvasGroup>().DOFade(0, 0); // 게임오버 화면 처음에 안보이게
@@ -133,11 +138,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         {
             case PlayerScript.Player_Type.SHOOTER:
                 player = GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>();
-                GameObject.Find("UI/Attacker").transform.GetChild(0).GetComponent<Slider>().value = (float)player.GetHealth() / player.GetMaxHealth();
+                GameObject.Find("UI/InGame/Attacker").transform.GetChild(0).GetComponent<Slider>().value = (float)player.GetHealth() / player.GetMaxHealth();
                 break;
             case PlayerScript.Player_Type.CATCHER:
                 player = GameObject.Find("Players").transform.GetChild(1).GetComponent<PlayerScript>();
-                GameObject.Find("UI/Collecter").transform.GetChild(0).GetComponent<Slider>().value = (float)player.GetHealth() / player.GetMaxHealth();
+                GameObject.Find("UI/InGame/Collecter").transform.GetChild(0).GetComponent<Slider>().value = (float)player.GetHealth() / player.GetMaxHealth();
                 break;
         }
     }
@@ -169,6 +174,50 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         DOTween.Sequence().Append(GameObject.Find("FragmentText").transform.DOScale(1.1f, 0.2f)).Append(GameObject.Find("FragmentText").transform.DOScale(1.0f, 0.2f));
     }
 
+
+    int reviveCnt_SHOOTER = 10;
+    int reviveCnt_CATCHER = 10;
+
+    // 플레이어 부활 UI
+    public void UI_revivePlayer(PlayerScript.Player_Type playerType)
+    {
+        // 플레이어 타입
+        PlayerScript.Player_Type type = playerType;
+
+        switch (type)
+        {
+            case PlayerScript.Player_Type.SHOOTER:
+                UI_increaseHealth_SHOOTER();
+                break;
+
+            case PlayerScript.Player_Type.CATCHER:
+                UI_increaseHealth_CATCHER();
+                break;
+        }
+        
+    }
+
+    
+
+    // 플레이어 부활 UI - 0.5초마다 0.1씩 증가
+    public void UI_increaseHealth_SHOOTER()
+    {
+        //Debug.Log(GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>().GetPlayerState());
+        //if (GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>().GetPlayerState() != PlayerScript.STATE.DEAD) return; // 살아있는 상태면 실행X
+        if(GameObject.Find("Attacker/HP").GetComponent<Slider>().value == 1) return; //HP 가득차면 실행X
+
+        GameObject.Find("Attacker/HP").GetComponent<Slider>().value += 0.1f;
+        Invoke("UI_increaseHealth_SHOOTER", 0.5f);
+    }
+
+    public void UI_increaseHealth_CATCHER()
+    {
+        //if (GameObject.Find("Players").transform.GetChild(1).GetComponent<PlayerScript>().GetPlayerState() != PlayerScript.STATE.DEAD) return;// 살아있는 상태면 실행X
+        if (GameObject.Find("Collecter/HP").GetComponent<Slider>().value == 1) return; //HP 가득차면 실행X
+
+        GameObject.Find("Collecter/HP").GetComponent<Slider>().value += 0.1f;
+        Invoke("UI_increaseHealth_CATCHER", 0.5f);
+    }
 
     public void PrevButton()
     {
@@ -213,12 +262,14 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     }
     public void Btn_Prev_MouseClick(GameObject selfObj)
     {
+        //if (BtnIsCliced) return;
         float curX = selfObj.transform.position.x;
         selfObj.transform.DOMoveX(curX-20, 0);
         selfObj.transform.DOMoveX(curX, 0.3f).SetEase(Ease.InCirc);
     }
     public void Btn_Next_MouseClick(GameObject selfObj)
     {
+        //if (BtnIsClicked) return;
         float curX = selfObj.transform.position.x;
         selfObj.transform.DOMoveX(curX+20, 0);
         selfObj.transform.DOMoveX(curX, 0.3f).SetEase(Ease.InCirc);
@@ -230,7 +281,6 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     {
         selfObj.transform.DOScale(1.2f, 0.3f);
         selfObj.transform.GetComponent<Image>().DOColor(new Color(1f,0.9f,0.6f),0.3f);
-        SoundManager.Instance.playSFX("점프");
     }
     public void StartBtn_MouseOut(GameObject selfObj)
     {

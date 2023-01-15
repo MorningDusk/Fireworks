@@ -810,6 +810,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Meteor
       objectReference: {fileID: 0}
+    - target: {fileID: 2916543999488353118, guid: fdc0b4e93c1215d4897b3c98d88df93d,
+        type: 3}
+      propertyPath: _Type
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fdc0b4e93c1215d4897b3c98d88df93d, type: 3}
 --- !u!4 &8273700930951854237 stripped
@@ -904,6 +909,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Interpolate
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218504842712837795, guid: ebd362dbd3b62d44bb5aee0a5e56c5dd,
+        type: 3}
+      propertyPath: _Type
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7860554593475811766, guid: ebd362dbd3b62d44bb5aee0a5e56c5dd,
         type: 3}
