@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Fragment : MonoBehaviour
 {
@@ -72,6 +73,9 @@ public class Fragment : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.RightShift))
         {
+            // 거리에 따른 별조각 획득... 은 RayCast 써야되는데 삽질하는데 시간걸려서 스킵..
+            //float distance = Vector3.Distance(this.transform.position, gm.PlayerManager.transform.GetChild(1).position);
+            //if (distance < 2) isCollectAble = true;
             if (this.isCollectAble == true)
             {
                 this.transform.SetAsLastSibling();

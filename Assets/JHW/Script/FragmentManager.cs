@@ -12,26 +12,28 @@ public class FragmentManager : MonoBehaviour
     float FadeTime = 4f; // 유성 소멸 시간
 
     // 조각 랜덤 생성 주기
-    private float spawnTime = 5.0f;
+    private float spawnTime = 1.0f;
 
     // Start is called before the first frame update
     void Start()
     {
         gm = GameManager.Instance;
-
-        // 조각 랜덤위치 생성
-        StartCoroutine(randomCreateFragment());
     }
 
     // 조각 랜덤 생성되는 함수
-    IEnumerator randomCreateFragment()
+    public IEnumerator randomCreateFragment()
     {
         // 게임오버시 생성 X
         while (gm.getGameOver()==false)
         {
             // 조각 오브젝트 불러오고 활성화
             //GameObject frag = GameObject.Find("FragmentPool").transform.GetChild(0).gameObject;
-            GameObject frag = transform.GetChild(0).gameObject;
+            int idx = 0;
+            while (true) {
+                if (this.transform.GetChild(idx).gameObject.activeSelf == true) idx++;
+                else break;
+            }
+            GameObject frag = this.transform.GetChild(idx).gameObject;
 
             frag.SetActive(true);
 
@@ -41,9 +43,10 @@ public class FragmentManager : MonoBehaviour
             // 조각 스폰 후 4초 뒤 소멸
             StartCoroutine(collectTimeout(frag));
 
-            yield return new WaitForSeconds(spawnTime); // 일정 주기로 조각 생성
+            // 조각 생성시간 재조정
+            spawnTime = Random.Range(1.0f, 2.0f);
 
-            
+            yield return new WaitForSeconds(spawnTime); // 일정 주기로 조각 생성
         }
     }
 

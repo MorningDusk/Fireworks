@@ -28,6 +28,9 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
         GameObject.Find("UI").transform.GetChild(0).gameObject.SetActive(false);
         GameObject.Find("UI").transform.GetChild(1).gameObject.SetActive(true);
+
+        this.transform.GetChild(2).GetChild(0).GetComponent<Button>().onClick.AddListener(()=>gm.GameRestart()); // 게임재시작
+        this.transform.GetChild(2).GetChild(1).GetComponent<Button>().onClick.AddListener(() => this.Btn_ToMain()); // 메인화면
     }
 
 
@@ -48,6 +51,9 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         StartCoroutine(DisplayLightHouseHP());
         StartCoroutine(DisplayAttackerHP());
         StartCoroutine(DisplayCollecterHP());
+
+        UI_changeBullet(); // 총알 개수UI 변경
+        UI_changeFragment(); // 조각 개수UI 변경
     }
 
     //타이틀/게임오버 화면 지연시간 뒤 비활성화
@@ -192,11 +198,6 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         // UX
         DOTween.Sequence().Append(GameObject.Find("FragmentText").transform.DOScale(1.1f, 0.2f)).Append(GameObject.Find("FragmentText").transform.DOScale(1.0f, 0.2f));
     }
-
-
-    // 플레이어 부활 UI
-    int reviveCnt_SHOOTER = 10;
-    int reviveCnt_CATCHER = 10;
 
     public void UI_revivePlayer(PlayerScript.Player_Type playerType)
     {

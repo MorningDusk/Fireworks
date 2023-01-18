@@ -9,6 +9,9 @@ public class LightHouse : SingletonMonoBehaviour<LightHouse>
 
     public int get_Durability() {return Durability;}
     public int get_MaxDurability() {return Max_Durability;}
+
+    public void set_Durability() { Durability = Max_Durability; }
+    
     void Start()
     {
         Durability = Max_Durability;
