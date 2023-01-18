@@ -87,37 +87,11 @@ public class PlayerScript : MonoBehaviour
 
         Piece = 0;
         PiecePerBullet = 5;
-<<<<<<< HEAD
-=======
 
-        //<<<<<<< HEAD
-        Speed = 0.6f;
+        Speed = 10.0f;
         JumpPower = 35.0f;
     }
-    
-    // �÷��̾� �ʱ�ȭ
-    public void playerInit()
-    {
-        _State = STATE.IDLE;
-        rigid = gameObject.GetComponent<Rigidbody>();
-//=======
-        Speed = 0.15f;
-        JumpPower = 35.0f;
-//>>>>>>> Dev_LSY
 
-        MaxHealth = 10;
-        Health = MaxHealth;
-
-        MaxBullet = 10;
-        Bullet = MaxBullet;
-
-        Piece = 0;
-        PiecePerBullet = 5;
-
-        Speed = 0.1f;
-        JumpPower = 20.0f;
->>>>>>> LAST
-    }
 
     private void Update()
     {
@@ -202,13 +176,13 @@ public class PlayerScript : MonoBehaviour
             if (isJumping)
             {
                 //transform.Translate(moveVec * Speed * 0.7f);
-                transform.position += moveVec * Speed * 0.7f;
+                transform.position += moveVec * Speed * Time.deltaTime * 0.7f;
                 transform.LookAt(transform.position + moveVec);
             }
             else
             {
                 //transform.Translate(moveVec * Speed);
-                transform.position += moveVec * Speed;
+                transform.position += moveVec * Speed * Time.deltaTime;
                 transform.LookAt(transform.position + moveVec);
             }
             Anim.SetBool("isWalk", moveVec != Vector3.zero);
@@ -220,17 +194,12 @@ public class PlayerScript : MonoBehaviour
             if (isJumping)
             {
                 //transform.Translate(moveVec * Speed * 0.7f);
-                transform.position += moveVec * Speed * 0.7f;
+                transform.position += moveVec * Speed * Time.deltaTime * 0.7f;
                 transform.LookAt(transform.position + moveVec);
             }
             else
             {
-<<<<<<< HEAD
-=======
-                // Debug.Log("asdf");
->>>>>>> LAST
-                //transform.Translate(moveVec * Speed);
-                transform.position += moveVec * Speed;
+                transform.position += moveVec * Speed * Time.deltaTime;
                 transform.LookAt(transform.position + moveVec);
             }
             Anim.SetBool("isWalk", moveVec != Vector3.zero);
@@ -291,13 +260,10 @@ public class PlayerScript : MonoBehaviour
         {
             if (Bullet > 0)
             {
-                //Debug.Log("Shot!");
                 Anim.SetTrigger("doAttack");
-                //transform.GetChild(2).GetComponent<BulletManager>().Attack();
                 bulletManager.Attack();
                 Bullet--;
 
-                // ���� ��� Bullet UI ����
                 UIManager.Instance.UI_changeBullet();
             }
             else
@@ -323,7 +289,7 @@ public class PlayerScript : MonoBehaviour
 
     IEnumerator revivePlayer()
     {
-        // HP ä��� (��Ȱ UI)
+        // HP ä���?(��Ȱ UI)
         UIManager.Instance.UI_revivePlayer(this.GetPlayerType());
 
         // 5�� �� ��Ȱ
@@ -333,14 +299,14 @@ public class PlayerScript : MonoBehaviour
         Anim.SetTrigger("doRevive");
     }
 
-    // Catcher �� �������� ȹ�� �� �����ϴ� �Լ�, Fragment ��ũ��Ʈ���� ȣ���
+    // Catcher �� �������� ȹ�� �� �����ϴ� �Լ�, Fragment ��ũ��Ʈ���� ȣ���?
     public void catchFragment()
     {
         Piece++; // ���� ȹ��
         if (Piece % PiecePerBullet==0) // ���� �ִ� �������� ������ ���������� ������
         {
             Piece = 0; // ���� �ʱ�ȭ
-            if (Bullet != MaxBullet) // ź����� �ִ밡 �ƴ϶��
+            if (Bullet != MaxBullet) // ź�����?�ִ밡 �ƴ϶��?
             {
                 Bullet++; // �Ѿ� ���� ����
                 UIManager.Instance.UI_changeBullet(); // �Ѿ� ���� �����ϴ� ux
