@@ -105,12 +105,8 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     {
         while (!gm.getGameOver())
         {
-            Vector3 locationHP = Camera.main.WorldToScreenPoint(GameObject.Find("Players").transform.GetChild(0).position);
-//<<<<<<< HEAD
+            Vector3 locationHP = Camera.main.WorldToScreenPoint(gm.PlayerManager.GetChild(0).position);
             GameObject.Find("UI/InGame/Attacker").transform.position = new Vector3(locationHP.x, locationHP.y + 125f, locationHP.z);
-//=======
-//            GameObject.Find("UI/Attacker").transform.position = new Vector3(locationHP.x,locationHP.y + 120f,locationHP.z);
-//>>>>>>> Dev_LSY
             yield return new WaitForSeconds(0.01f);
         }
     }
@@ -119,12 +115,8 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     {
         while (!gm.getGameOver())
         {
-            Vector3 locationHP = Camera.main.WorldToScreenPoint(GameObject.Find("Players").transform.GetChild(1).position);
-//<<<<<<< HEAD
+            Vector3 locationHP = Camera.main.WorldToScreenPoint(gm.PlayerManager.GetChild(1).position);
             GameObject.Find("UI/InGame/Collecter").transform.position = new Vector3(locationHP.x, locationHP.y + 125f, locationHP.z);
-//=======
-//            GameObject.Find("UI/Collecter").transform.position = new Vector3(locationHP.x, locationHP.y + 120f, locationHP.z); 
-//>>>>>>> Dev_LSY
             yield return new WaitForSeconds(0.01f);
         }
     }
@@ -152,11 +144,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         switch (_Type)
         {
             case PlayerScript.Player_Type.SHOOTER:
-                player = GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>();
+                player = gm.PlayerManager.GetChild(0).GetComponent<PlayerScript>();
                 GameObject.Find("UI/InGame/Attacker").transform.GetChild(0).GetComponent<Slider>().value = (float)player.GetHealth() / player.GetMaxHealth();
                 break;
             case PlayerScript.Player_Type.CATCHER:
-                player = GameObject.Find("Players").transform.GetChild(1).GetComponent<PlayerScript>();
+                player = gm.PlayerManager.GetChild(1).GetComponent<PlayerScript>();
                 GameObject.Find("UI/InGame/Collecter").transform.GetChild(0).GetComponent<Slider>().value = (float)player.GetHealth() / player.GetMaxHealth();
                 break;
         }
@@ -169,7 +161,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     // ���� ��� �Ҳɳ��� ��ź�� UI �����ϴ� �Լ�
     public void UI_changeBullet()
     {
-        PlayerScript player = GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>();
+        PlayerScript player = gm.PlayerManager.GetChild(0).GetComponent<PlayerScript>();
 
         string displayText = ""; // ������ �ؽ�Ʈ
         displayText = player.GetBullet().ToString() + "/" + player.GetMaxBullet().ToString();
@@ -183,7 +175,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     // ������ ��� ���� ���� ȹ��� UI �����ϴ� �Լ�
     public void UI_changeFragment()
     {
-        PlayerScript player = GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>();
+        PlayerScript player = gm.PlayerManager.GetChild(0).GetComponent<PlayerScript>();
 
         string displayText = ""; // ������ �ؽ�Ʈ
         displayText = player.GetPiece().ToString() + "/" + player.GetPiecePerBullet().ToString();
@@ -221,8 +213,6 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     // �÷��̾� ��Ȱ UI - 0.5�ʸ��� 0.1�� ����
     public void UI_increaseHealth_SHOOTER()
     {
-        //Debug.Log(GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>().GetPlayerState());
-        //if (GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>().GetPlayerState() != PlayerScript.STATE.DEAD) return; // ����ִ� ���¸� ����X
         if(GameObject.Find("Attacker/HP").GetComponent<Slider>().value == 1) return; //HP �������� ����X
 
         GameObject.Find("Attacker/HP").GetComponent<Slider>().value += 0.1f;
@@ -231,7 +221,6 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
     public void UI_increaseHealth_CATCHER()
     {
-        //if (GameObject.Find("Players").transform.GetChild(1).GetComponent<PlayerScript>().GetPlayerState() != PlayerScript.STATE.DEAD) return;// ����ִ� ���¸� ����X
         if (GameObject.Find("Collecter/HP").GetComponent<Slider>().value == 1) return; //HP �������� ����X
 
         GameObject.Find("Collecter/HP").GetComponent<Slider>().value += 0.1f;

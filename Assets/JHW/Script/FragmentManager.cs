@@ -30,7 +30,9 @@ public class FragmentManager : MonoBehaviour
         while (gm.getGameOver()==false)
         {
             // 조각 오브젝트 불러오고 활성화
-            GameObject frag = GameObject.Find("FragmentPool").transform.GetChild(0).gameObject;
+            //GameObject frag = GameObject.Find("FragmentPool").transform.GetChild(0).gameObject;
+            GameObject frag = transform.GetChild(0).gameObject;
+
             frag.SetActive(true);
 
             // 조각 랜덤스폰

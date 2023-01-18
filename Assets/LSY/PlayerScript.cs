@@ -76,8 +76,7 @@ public class PlayerScript : MonoBehaviour
         Piece = 0;
         PiecePerBullet = 5;
 
-        //<<<<<<< HEAD
-        Speed = 0.6f;
+        Speed = 10.0f;
         JumpPower = 35.0f;
     }
     
@@ -86,10 +85,6 @@ public class PlayerScript : MonoBehaviour
     {
         _State = STATE.IDLE;
         rigid = gameObject.GetComponent<Rigidbody>();
-//=======
-        Speed = 0.15f;
-        JumpPower = 35.0f;
-//>>>>>>> Dev_LSY
 
         MaxHealth = 10;
         Health = MaxHealth;
@@ -187,13 +182,13 @@ public class PlayerScript : MonoBehaviour
             if (isJumping)
             {
                 //transform.Translate(moveVec * Speed * 0.7f);
-                transform.position += moveVec * Speed * 0.7f;
+                transform.position += moveVec * Speed * Time.deltaTime * 0.7f;
                 transform.LookAt(transform.position + moveVec);
             }
             else
             {
                 //transform.Translate(moveVec * Speed);
-                transform.position += moveVec * Speed;
+                transform.position += moveVec * Speed * Time.deltaTime;
                 transform.LookAt(transform.position + moveVec);
             }
             Anim.SetBool("isWalk", moveVec != Vector3.zero);
@@ -205,14 +200,13 @@ public class PlayerScript : MonoBehaviour
             if (isJumping)
             {
                 //transform.Translate(moveVec * Speed * 0.7f);
-                transform.position += moveVec * Speed * 0.7f;
+                transform.position += moveVec * Speed * Time.deltaTime * 0.7f;
                 transform.LookAt(transform.position + moveVec);
             }
             else
             {
-                // Debug.Log("asdf");
                 //transform.Translate(moveVec * Speed);
-                transform.position += moveVec * Speed;
+                transform.position += moveVec * Speed * Time.deltaTime;
                 transform.LookAt(transform.position + moveVec);
             }
             Anim.SetBool("isWalk", moveVec != Vector3.zero);
@@ -273,13 +267,10 @@ public class PlayerScript : MonoBehaviour
         {
             if (Bullet > 0)
             {
-                //Debug.Log("Shot!");
                 Anim.SetTrigger("doAttack");
-                //transform.GetChild(2).GetComponent<BulletManager>().Attack();
                 bulletManager.Attack();
                 Bullet--;
 
-                // ���� ��� Bullet UI ����
                 UIManager.Instance.UI_changeBullet();
             }
             else

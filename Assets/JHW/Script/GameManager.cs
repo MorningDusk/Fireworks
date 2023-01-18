@@ -5,6 +5,7 @@ using DG.Tweening;
 
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
+    public Transform PlayerManager, BulletManager, MeteorManager, FragmentManager, MapManager;
 
     // 게임오버 변수
     [SerializeField]
@@ -13,7 +14,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     [SerializeField]
     private bool isStart = false;
 
-
     // getter
     public bool getGameOver() { return isGameOver; }
     public bool getIsStart() { return isStart; }
@@ -21,6 +21,15 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     // setter
     public void setGameOver(bool flag) { isGameOver = flag; }
     public void setIsStart(bool flag) { isStart = flag;}
+
+    private void Start()
+    {
+        PlayerManager= transform.GetChild(0);
+        BulletManager= transform.GetChild(1);
+        MeteorManager= transform.GetChild(2);
+        FragmentManager= transform.GetChild(3);
+        MapManager= transform.GetChild(4);
+    }
 
     public void GameStart()
     {
@@ -54,8 +63,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public void gameOverCheck()
     {
         // 플레이어 2명 다 죽어있으면 게임오버
-        if (GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>().isPlayerDead()
-            && GameObject.Find("Players").transform.GetChild(1).GetComponent<PlayerScript>().isPlayerDead())
+        if(PlayerManager.GetChild(0).GetComponent<PlayerScript>().isPlayerDead()
+            && PlayerManager.GetChild(1).GetComponent<PlayerScript>().isPlayerDead())
         {
             GameOver();
         }

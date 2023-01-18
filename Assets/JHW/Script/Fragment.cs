@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Fragment : MonoBehaviour
 {
-
+    GameManager gm;
     // 기획서에 있는 변수 LifeTime (탄환 변수) , FadeTime (유성 조각 변수)
     float LifeTime; 
     float FadeTime = 4f;
@@ -20,6 +20,10 @@ public class Fragment : MonoBehaviour
     // setter
     public void setCollectAble(bool flag) { isCollectAble = flag; }
 
+    private void Awake()
+    {
+        gm = GameManager.Instance;
+    }
 
     private void Update()
     {
@@ -73,8 +77,8 @@ public class Fragment : MonoBehaviour
                 this.transform.SetAsLastSibling();
                 this.gameObject.SetActive(false);
                 this.isCollectAble = false;
-                GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>().catchFragment();
-                GameObject.Find("Players").transform.GetChild(1).GetComponent<PlayerScript>().Anim.SetTrigger("doCollect");
+                gm.PlayerManager.GetChild(0).GetComponent<PlayerScript>().catchFragment();
+                gm.PlayerManager.GetChild(1).GetComponent<PlayerScript>().Anim.SetTrigger("doCollect");
             }
         }
     }
