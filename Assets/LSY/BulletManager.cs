@@ -43,8 +43,10 @@ public class BulletManager : SingletonMonoBehaviour<BulletManager>
     {
         Bullet tmp = m_bullet.pop();
         tmp.transform.SetParent(Active_Bullet);
-        tmp.transform.position = gm.PlayerManager.GetChild(0).position; // Shooter position
-        tmp.transform.GetChild(0).position = new Vector3(tmp.transform.position.x, tmp.transform.position.y + 5.7f, tmp.transform.position.z);
+        Transform _tmp = gm.PlayerManager.GetChild(0);
+        //tmp.transform.position = gm.PlayerManager.GetChild(0).position; // Shooter position
+        tmp.transform.position = new Vector3(_tmp.transform.position.x, _tmp.transform.position.y + 5.7f, _tmp.transform.position.z);
+        tmp.transform.GetChild(0).position = new Vector3(tmp.transform.position.x, tmp.transform.position.y, tmp.transform.position.z);
         tmp.gameObject.SetActive(true);
         //tmp.GetComponent<SphereCollider>().enabled = true;
         tmp.GetComponent<Bullet>()._enalbled = true;
@@ -58,6 +60,7 @@ public class BulletManager : SingletonMonoBehaviour<BulletManager>
         //bullet.transform.localPosition = Bullet_Pool.localPosition;
         bullet.transform.position = Bullet_Pool.position;
         bullet.transform.GetChild(0).position = bullet.transform.position;
+        Debug.Log("Push >> " + bullet.gameObject.name);
         m_bullet.push(bullet);
         
     }

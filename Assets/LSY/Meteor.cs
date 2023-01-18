@@ -110,14 +110,8 @@ public class Meteor : MonoBehaviour
         switch (other.tag)
         {
             case "Player":
-<<<<<<< HEAD
-
                 if (GameManager.Instance.getGameOver()) return;
 
-                // ÇÃ·¹ÀÌ¾î HP °¨¼Ò
-=======
-                // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ HP ï¿½ï¿½ï¿½ï¿½
->>>>>>> LAST
                 switch (this.MeteorType)
                 {
                     case Meteor_Type.BIG:
@@ -169,19 +163,19 @@ public class Meteor : MonoBehaviour
         {
             case Meteor_Type.BIG:
                 pos = this.transform.position;
-                meteorManager.Meteor_pushback(this);
+                //meteorManager.Meteor_pushback(this);
                 meteorManager.Meteor_pop(Meteor_Type.BIG, pos);
                 break;
 
             case Meteor_Type.MEDIUM:
                 //Debug.Log(this + " Split");
                 pos = this.transform.position;
-                meteorManager.Meteor_pushback(this);
+                //meteorManager.Meteor_pushback(this);
                 meteorManager.Meteor_pop(Meteor_Type.MEDIUM, pos);
                 break;
 
             case Meteor_Type.SMALL:
-                meteorManager.Meteor_pushback(this);
+                //meteorManager.Meteor_pushback(this);
                 break;
 
         }
