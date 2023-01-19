@@ -6,36 +6,44 @@ using UnityEngine.VFX;
 public class Bullet : MonoBehaviour
 {
     BulletManager bulletManager;
-    public bool _enalbled = false;
-    bool _first = true;
     VisualEffect _effect;
+
+    public bool _enalbled = false;
+    Transform _bulletball;
 
     [SerializeField]
     float BulletSpeed;
     [SerializeField]
-    Vector3 pos;
+    Vector3 pos, moveVec;
 
     void Start()
     {
+        _bulletball = transform.GetChild(0);
         bulletManager = BulletManager.Instance;
         _effect = GetComponent<VisualEffect>();
-        BulletSpeed = 13.0f;
-        pos = transform.position;
+        _effect.enabled= true;
+        BulletSpeed = 6.0f;
+        moveVec = new Vector3(0f, 1f, 0f);
     }
 
     void Update()
     {
         if (_enalbled)
         {
-            //if (_first)
-            //    Debug.Log("Bullet:" + transform.localPosition + ", Player:" + transform.parent.parent.GetChild(0).localPosition);
-            //_first= false;
+            if (transform.position.y <= 30f)
+                transform.position += moveVec * BulletSpeed * Time.deltaTime;
+            
 
-            //this.transform.Translate(new Vector3(0f, 1f, 0f) * BulletSpeed * Time.deltaTime);
-            this.transform.Translate(Vector3.up * BulletSpeed * Time.deltaTime);
-            if (transform.localPosition.y > 60f)
+            else if (transform.position.y > 30f)
             {
-                bulletManager.Bullet_pushback(this);
+                //transform.GetChild(0).position = Vector3.zero;
+                _bulletball.gameObject.SetActive(true);
+                this.GetComponent<SphereCollider>().enabled = false;
+                //bulletManager.Bullet_pushback(this);
+                _effect.enabled = false;
+                _enalbled=false;
+                Debug.Log("Invoke A");
+                Invoke("Invoke_pushback", 4.0f);
             }
         }
 
@@ -47,12 +55,27 @@ public class Bullet : MonoBehaviour
         {
             Debug.Log(gameObject + " " + other.gameObject + " Trigger enter");
             this.GetComponent<SphereCollider>().enabled = false;
+            _enalbled = false;
+            _effect.enabled= false;
+            _bulletball.gameObject.SetActive(true);
+
+            Debug.Log("Invoke B");
+            Invoke("Invoke_pushback", 4.0f);
+
             other.GetComponent<Meteor>().Meteor_Split();
 
-            this.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
-
+            //this.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
 
         }
+    }
+
+    private void Invoke_pushback()
+    {
+        this.GetComponent<SphereCollider>().enabled = true;
+        _effect.enabled = false;
+
+        _bulletball.gameObject.SetActive(false);
+        bulletManager.Bullet_pushback(this);
     }
 
 

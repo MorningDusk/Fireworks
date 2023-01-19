@@ -664,6 +664,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Anim: {fileID: 0}
+  bulletManager: {fileID: 0}
   _Type: 1
   _State: 0
   Health: 0
@@ -676,6 +677,7 @@ MonoBehaviour:
   JumpPower: 0
   isJumping: 0
   isGround: 0
+  isDead: 0
 --- !u!1 &6411472445750320354
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,7 +829,6 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 8cbae53a597d86b4db42d4cfe8db0299, type: 2}
-  - {fileID: 2100000, guid: 5a4193d3e75b7fe4a96612d7787b0fb0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

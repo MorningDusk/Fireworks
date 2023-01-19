@@ -3,6 +3,7 @@ using System.Collections.Generic;
 //using System.Numerics;
 using System.Transactions;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEditor.PlayerSettings;
 
 public class Meteor : MonoBehaviour
@@ -110,14 +111,16 @@ public class Meteor : MonoBehaviour
         switch (other.tag)
         {
             case "Player":
-<<<<<<< HEAD
+//<<<<<<< HEAD
 
                 if (GameManager.Instance.getGameOver()) return;
 
                 // ÇÃ·¹ÀÌ¾î HP °¨¼Ò
-=======
                 // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ HP ï¿½ï¿½ï¿½ï¿½
->>>>>>> LAST
+//=======
+//                if (GameManager.Instance.getGameOver()) return;
+
+//>>>>>>> Dev_LSY2
                 switch (this.MeteorType)
                 {
                     case Meteor_Type.BIG:
@@ -134,7 +137,7 @@ public class Meteor : MonoBehaviour
                 }
                 // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ HP ï¿½ï¿½ï¿½Ò¿ï¿½ ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½
                 UIManager.Instance.UI_changeHP(other.GetComponent<PlayerScript>().GetPlayerType());
-                UIManager.Instance.UI_changeHP_Lighthouse();
+
                 break;
 
             case "Floor":
@@ -155,7 +158,8 @@ public class Meteor : MonoBehaviour
             case "LightHouse":
                 meteorManager.Meteor_pushback(this);
                 other.GetComponent<LightHouse>().DecreaseHealth(Damage);
-
+                UIManager.Instance.UI_changeHP_Lighthouse();
+                if (GameObject.Find("LightHouseHP/HP").GetComponent<Slider>().value <= 0) GameManager.Instance.GameOver(); // µî´ë Ã¼·Â 0ÀÌ¸é °×¿À¹ö
 
                 break;
         }
@@ -169,19 +173,19 @@ public class Meteor : MonoBehaviour
         {
             case Meteor_Type.BIG:
                 pos = this.transform.position;
-                meteorManager.Meteor_pushback(this);
+                //meteorManager.Meteor_pushback(this);
                 meteorManager.Meteor_pop(Meteor_Type.BIG, pos);
                 break;
 
             case Meteor_Type.MEDIUM:
                 //Debug.Log(this + " Split");
                 pos = this.transform.position;
-                meteorManager.Meteor_pushback(this);
+                //meteorManager.Meteor_pushback(this);
                 meteorManager.Meteor_pop(Meteor_Type.MEDIUM, pos);
                 break;
 
             case Meteor_Type.SMALL:
-                meteorManager.Meteor_pushback(this);
+                //meteorManager.Meteor_pushback(this);
                 break;
 
         }

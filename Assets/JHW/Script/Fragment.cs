@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Fragment : MonoBehaviour
 {
-
+    GameManager gm;
     // 기획서에 있는 변수 LifeTime (탄환 변수) , FadeTime (유성 조각 변수)
     float LifeTime; 
     float FadeTime = 4f;
@@ -20,6 +21,10 @@ public class Fragment : MonoBehaviour
     // setter
     public void setCollectAble(bool flag) { isCollectAble = flag; }
 
+    private void Awake()
+    {
+        gm = GameManager.Instance;
+    }
 
     private void Update()
     {
@@ -68,13 +73,16 @@ public class Fragment : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.RightShift))
         {
+            // 거리에 따른 별조각 획득... 은 RayCast 써야되는데 삽질하는데 시간걸려서 스킵..
+            //float distance = Vector3.Distance(this.transform.position, gm.PlayerManager.transform.GetChild(1).position);
+            //if (distance < 2) isCollectAble = true;
             if (this.isCollectAble == true)
             {
                 this.transform.SetAsLastSibling();
                 this.gameObject.SetActive(false);
                 this.isCollectAble = false;
-                GameObject.Find("Players").transform.GetChild(0).GetComponent<PlayerScript>().catchFragment();
-                GameObject.Find("Players").transform.GetChild(1).GetComponent<PlayerScript>().Anim.SetTrigger("doCollect");
+                gm.PlayerManager.GetChild(0).GetComponent<PlayerScript>().catchFragment();
+                gm.PlayerManager.GetChild(1).GetComponent<PlayerScript>().Anim.SetTrigger("doCollect");
             }
         }
     }
