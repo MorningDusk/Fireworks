@@ -25,6 +25,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void Start()
     {
+
         PlayerManager= transform.GetChild(0);
         BulletManager= transform.GetChild(1);
         MeteorManager= transform.GetChild(2);
@@ -62,13 +63,20 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         isStart = true;
 
         UIManager.Instance.UI_GameStart();
+//<<<<<<< HEAD
 
-        GameObject player1 = PlayerManager.transform.GetChild(0).gameObject;
-        GameObject player2 = PlayerManager.transform.GetChild(1).gameObject;
+//        GameObject player1 = PlayerManager.transform.GetChild(0).gameObject;
+//        GameObject player2 = PlayerManager.transform.GetChild(1).gameObject;
+//=======
+        
+        GameObject player1 = PlayerManager.GetChild(0).gameObject;
+        GameObject player2 = PlayerManager.GetChild(1).gameObject;
+//>>>>>>> Dev_LSY2
 
         player1.GetComponent<PlayerScript>().playerInit();
         player2.GetComponent<PlayerScript>().playerInit();
 
+//<<<<<<< HEAD
         player1.transform.localPosition = new Vector3(Camera.main.transform.localPosition.x+15f, 5f);
         player2.transform.localPosition = new Vector3(Camera.main.transform.localPosition.x-15f, 5f,0);
 
@@ -76,6 +84,10 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
         // 조각 랜덤위치 생성
         StartCoroutine(FragmentManager.GetComponent<FragmentManager>().randomCreateFragment());
+//=======
+        //player1.transform.localPosition = new Vector3(-5f, 5f,0);
+        //player2.transform.localPosition = new Vector3(5f, 5f,0);
+//>>>>>>> Dev_LSY2
 
         // UI
         GameObject.Find("Attacker/HP").GetComponent<Slider>().value = 1;
