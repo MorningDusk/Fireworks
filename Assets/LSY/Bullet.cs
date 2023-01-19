@@ -72,7 +72,7 @@ public class Bullet : MonoBehaviour
     private void Invoke_pushback()
     {
         this.GetComponent<SphereCollider>().enabled = true;
-        _effect.enabled = false;
+        _effect.enabled = true;
 
         _bulletball.gameObject.SetActive(false);
         bulletManager.Bullet_pushback(this);
